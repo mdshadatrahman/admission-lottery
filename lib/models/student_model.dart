@@ -1,11 +1,11 @@
 class Student {
-  dynamic sl;
-  dynamic roll;
-  dynamic isFq;
-  dynamic isEq;
-  dynamic isCaq;
-  dynamic isSibling;
-  dynamic isGeneral;
+  String? sl;
+  String? roll;
+  String? isFq;
+  String? isEq;
+  String? isCaq;
+  String? isSibling;
+  String? isGeneral;
 
   Student({
     required this.sl,

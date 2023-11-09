@@ -1,4 +1,5 @@
 import 'package:admission_lottery/home/controllers/home_controller.dart';
+import 'package:admission_lottery/home/widgets/textfield_with_label.dart';
 import 'package:admission_lottery/main.dart';
 import 'package:admission_lottery/utils/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -133,6 +134,31 @@ class _LeftPartState extends State<LeftPart> {
                 ),
               ),
             ],
+          ),
+          SizedBox(height: 20.h),
+          TextFieldWithLabel(
+            controller: TextEditingController(),
+            label: 'Students to be admitted:',
+          ),
+          SizedBox(height: 10.h),
+          TextFieldWithLabel(
+            controller: TextEditingController(),
+            label: 'Freedom Fighter Quota(%):',
+          ),
+          SizedBox(height: 10.h),
+          TextFieldWithLabel(
+            controller: TextEditingController(),
+            label: 'Education Quota(%):',
+          ),
+          SizedBox(height: 10.h),
+          TextFieldWithLabel(
+            controller: TextEditingController(),
+            label: 'Catchment Area Quota(%):',
+          ),
+          SizedBox(height: 10.h),
+          TextFieldWithLabel(
+            controller: TextEditingController(),
+            label: 'Sibling Quota(%):',
           ),
           SizedBox(height: 20.h),
           GestureDetector(

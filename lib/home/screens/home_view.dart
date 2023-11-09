@@ -1,13 +1,25 @@
+// ignore_for_file: invalid_use_of_protected_member
+
+import 'package:admission_lottery/home/controllers/home_controller.dart';
+import 'package:admission_lottery/home/controllers/result_logic.dart';
 import 'package:admission_lottery/home/widgets/header.dart';
 import 'package:admission_lottery/home/widgets/left_part.dart';
 import 'package:admission_lottery/home/widgets/right_part.dart';
 import 'package:admission_lottery/main.dart';
 import 'package:admission_lottery/utils/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/instance_manager.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  final controller = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,21 +27,23 @@ class HomeView extends StatelessWidget {
       body: SizedBox(
         height: height,
         width: width,
-        child: const Column(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Header(),
+            const Header(),
             Expanded(
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: LeftPart(),
-                  ),
+                  const Expanded(child: LeftPart()),
                   Expanded(
                     flex: 3,
-                    child: RightPart(),
+                    child: Obx(
+                      () => RightPart(
+                        students: ResultLogic.getFq(controller.students.value),
+                      ),
+                    ),
                   ),
                 ],
               ),
