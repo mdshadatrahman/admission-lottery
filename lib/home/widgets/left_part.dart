@@ -135,19 +135,24 @@ class _LeftPartState extends State<LeftPart> {
             ],
           ),
           SizedBox(height: 20.h),
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 10.sp),
-            decoration: BoxDecoration(
-              color: AppColors.primary,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Center(
-              child: Text(
-                'Result',
-                style: TextStyle(
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.onPrimary,
+          GestureDetector(
+            onTap: () {
+              controller.readDataFromExcelSheet();
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 10.sp),
+              decoration: BoxDecoration(
+                color: AppColors.primary,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Center(
+                child: Text(
+                  'Result',
+                  style: TextStyle(
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.onPrimary,
+                  ),
                 ),
               ),
             ),
