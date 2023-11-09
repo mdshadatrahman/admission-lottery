@@ -1,9 +1,9 @@
 import 'package:admission_lottery/home/widgets/header.dart';
 import 'package:admission_lottery/home/widgets/left_part.dart';
+import 'package:admission_lottery/home/widgets/right_part.dart';
 import 'package:admission_lottery/main.dart';
 import 'package:admission_lottery/utils/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -15,11 +15,11 @@ class HomeView extends StatelessWidget {
       body: SizedBox(
         height: height,
         width: width,
-        child: Column(
+        child: const Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const Header(),
+            Header(),
             Expanded(
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,10 +28,8 @@ class HomeView extends StatelessWidget {
                     child: LeftPart(),
                   ),
                   Expanded(
-                    flex: 2,
-                    child: Container(
-                      color: AppColors.background,
-                    ),
+                    flex: 3,
+                    child: RightPart(),
                   ),
                 ],
               ),
