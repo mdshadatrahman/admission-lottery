@@ -6,7 +6,7 @@ class QuotaEligibleStudentsController {
   }) {
     if (students.isEmpty) return [];
     List<Student> fqEligibleStudents = [];
-    for (int i = 1; i < students.length; i++) {
+    for (int i = 0; i < students.length; i++) {
       if (students[i].isFq?.toLowerCase() == 'fq') {
         fqEligibleStudents.add(students[i]);
       }
@@ -19,7 +19,7 @@ class QuotaEligibleStudentsController {
   }) {
     if (students.isEmpty) return [];
     List<Student> eqEligibleStudents = [];
-    for (int i = 1; i < students.length; i++) {
+    for (int i = 0; i < students.length; i++) {
       if (students[i].isEq?.toLowerCase() == 'eq') {
         eqEligibleStudents.add(students[i]);
       }
@@ -32,7 +32,7 @@ class QuotaEligibleStudentsController {
   }) {
     if (students.isEmpty) return [];
     List<Student> caqEligibleStudents = [];
-    for (int i = 1; i < students.length; i++) {
+    for (int i = 0; i < students.length; i++) {
       if (students[i].isCaq?.toLowerCase() == 'yes') {
         caqEligibleStudents.add(students[i]);
       }
@@ -45,7 +45,7 @@ class QuotaEligibleStudentsController {
   }) {
     if (students.isEmpty) return [];
     List<Student> siblingEligibleStudents = [];
-    for (int i = 1; i < students.length; i++) {
+    for (int i = 0; i < students.length; i++) {
       if (students[i].isSibling?.toLowerCase() == 'yes') {
         siblingEligibleStudents.add(students[i]);
       }

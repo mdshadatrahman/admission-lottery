@@ -2,11 +2,13 @@
 
 import 'package:admission_lottery/home/controllers/draw_controller.dart';
 import 'package:admission_lottery/home/controllers/home_controller.dart';
+import 'package:admission_lottery/home/screens/result_view.dart';
 import 'package:admission_lottery/home/widgets/textfield_with_label.dart';
 import 'package:admission_lottery/main.dart';
 import 'package:admission_lottery/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/instance_manager.dart';
 import 'dart:developer' as developer show log;
@@ -309,6 +311,13 @@ class _LeftPartState extends State<LeftPart> {
                   developer.log('SIBLING: $sibling');
                   developer.log('GENERAL: $generalQuota');
                   developer.log('*********************************');
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ResultView(),
+                    ),
+                  );
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 10.sp),
