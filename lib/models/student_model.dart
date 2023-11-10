@@ -1,13 +1,15 @@
-class Student {
-  String? sl;
-  String? roll;
-  String? isFq;
-  String? isEq;
-  String? isCaq;
-  String? isSibling;
-  String? isGeneral;
+import 'package:equatable/equatable.dart';
 
-  Student({
+class Student extends Equatable {
+  final String? sl;
+  final String? roll;
+  final String? isFq;
+  final String? isEq;
+  final String? isCaq;
+  final String? isSibling;
+  final String? isGeneral;
+
+  const Student({
     required this.sl,
     required this.roll,
     required this.isFq,
@@ -16,6 +18,9 @@ class Student {
     required this.isSibling,
     required this.isGeneral,
   });
+
+  @override
+  List<Object?> get props => [sl, roll, isFq, isEq, isCaq, isSibling, isGeneral];
 }
 
 enum QuotaTypes {

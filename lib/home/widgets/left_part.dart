@@ -1,5 +1,8 @@
+// ignore_for_file: invalid_use_of_protected_member
+
+import 'package:admission_lottery/home/controllers/draw_controller.dart';
 import 'package:admission_lottery/home/controllers/home_controller.dart';
-import 'package:admission_lottery/home/controllers/result_logic.dart';
+import 'package:admission_lottery/home/controllers/quota_eligible_students_controller.dart';
 import 'package:admission_lottery/home/widgets/textfield_with_label.dart';
 import 'package:admission_lottery/main.dart';
 import 'package:admission_lottery/utils/app_colors.dart';
@@ -186,10 +189,17 @@ class _LeftPartState extends State<LeftPart> {
           SizedBox(height: 20.h),
           GestureDetector(
             onTap: () {
-              controller.students.value = ResultLogic.getFq(
-                students: controller.students,
-                eligiblePercentage: double.parse(freedomFighterQuotaController.text),
+              controller.filterStudents();
+              final drawController = Get.put(DrawController());
+              drawController.drawFqEligibleStudents(
+                numberOfStudentsToBeAdmitted: 100,
+                percentageOfFqQuota: 5,
               );
+              drawController.drawEqEligibleStudents(
+                numberOfStudentsToBeAdmitted: 100,
+                percentageOfEqQuota: 2,
+              );
+              controller.showStudents.value = drawController.eqAdmittedStudents;
             },
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 10.sp),

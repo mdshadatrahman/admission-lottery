@@ -1,3 +1,4 @@
+import 'package:admission_lottery/home/controllers/quota_eligible_students_controller.dart';
 import 'package:admission_lottery/models/student_model.dart';
 import 'package:excel/excel.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +10,12 @@ class HomeController extends GetxController {
   RxString version = 'English'.obs;
   RxString shift = 'Morning'.obs;
   RxList<Student> students = <Student>[].obs;
+  RxList<Student> showStudents = <Student>[].obs;
+
+  RxList<Student> fqEligibleStudents = <Student>[].obs;
+  RxList<Student> eqEligibleStudents = <Student>[].obs;
+  RxList<Student> caqEligibleStudents = <Student>[].obs;
+  RxList<Student> siblingEligibleStudents = <Student>[].obs;
 
   final String excelFile = 'assets/dataset.xlsx';
 
@@ -20,8 +27,6 @@ class HomeController extends GetxController {
       students.clear();
       for (var table in excel.tables.keys) {
         for (var row in excel.tables[table]!.rows) {
-          // for (int i = 1; i < excel.tables[table]!.rows.length; i++) {
-          // var row = excel.tables[table]!.rows[i];
           students.add(
             Student(
               sl: row[0]?.value.toString(),
@@ -38,5 +43,20 @@ class HomeController extends GetxController {
     } catch (e) {
       developer.log('Error: $e', name: 'HomeController.readDataFromExcelSheet');
     }
+  }
+
+  void filterStudents() {
+    fqEligibleStudents.value = QuotaEligibleStudentsController.getFqEligibleStudents(
+      students: students,
+    );
+    eqEligibleStudents.value = QuotaEligibleStudentsController.getEqEligibleStudents(
+      students: students,
+    );
+    caqEligibleStudents.value = QuotaEligibleStudentsController.getCaqEligibleStudents(
+      students: students,
+    );
+    siblingEligibleStudents.value = QuotaEligibleStudentsController.getSiblingEligibleStudents(
+      students: students,
+    );
   }
 }
