@@ -1,7 +1,6 @@
 // ignore_for_file: invalid_use_of_protected_member
 
 import 'package:admission_lottery/home/controllers/home_controller.dart';
-import 'package:admission_lottery/home/controllers/result_logic.dart';
 import 'package:admission_lottery/home/widgets/header.dart';
 import 'package:admission_lottery/home/widgets/left_part.dart';
 import 'package:admission_lottery/home/widgets/right_part.dart';
@@ -40,9 +39,7 @@ class _HomeViewState extends State<HomeView> {
                   Expanded(
                     flex: 3,
                     child: Obx(
-                      () => RightPart(
-                        students: ResultLogic.getFq(controller.students.value),
-                      ),
+                      () => RightPart(students: controller.students.value),
                     ),
                   ),
                 ],

@@ -1,4 +1,5 @@
 import 'package:admission_lottery/home/controllers/home_controller.dart';
+import 'package:admission_lottery/home/controllers/result_logic.dart';
 import 'package:admission_lottery/home/widgets/textfield_with_label.dart';
 import 'package:admission_lottery/main.dart';
 import 'package:admission_lottery/utils/app_colors.dart';
@@ -21,6 +22,28 @@ class _LeftPartState extends State<LeftPart> {
   @override
   void initState() {
     super.initState();
+    controller.readDataFromExcelSheet();
+    studentToBeAdmittedController.text = '100';
+    freedomFighterQuotaController.text = '5';
+    educationQuotaController.text = '2';
+    catchmentAreaQuotaController.text = '40';
+    siblingQuotaController.text = '5';
+  }
+
+  final studentToBeAdmittedController = TextEditingController();
+  final freedomFighterQuotaController = TextEditingController();
+  final educationQuotaController = TextEditingController();
+  final catchmentAreaQuotaController = TextEditingController();
+  final siblingQuotaController = TextEditingController();
+
+  @override
+  void dispose() {
+    studentToBeAdmittedController.dispose();
+    freedomFighterQuotaController.dispose();
+    educationQuotaController.dispose();
+    catchmentAreaQuotaController.dispose();
+    siblingQuotaController.dispose();
+    super.dispose();
   }
 
   @override
@@ -137,33 +160,36 @@ class _LeftPartState extends State<LeftPart> {
           ),
           SizedBox(height: 20.h),
           TextFieldWithLabel(
-            controller: TextEditingController(),
+            controller: studentToBeAdmittedController,
             label: 'Students to be admitted:',
           ),
           SizedBox(height: 10.h),
           TextFieldWithLabel(
-            controller: TextEditingController(),
+            controller: freedomFighterQuotaController,
             label: 'Freedom Fighter Quota(%):',
           ),
           SizedBox(height: 10.h),
           TextFieldWithLabel(
-            controller: TextEditingController(),
+            controller: educationQuotaController,
             label: 'Education Quota(%):',
           ),
           SizedBox(height: 10.h),
           TextFieldWithLabel(
-            controller: TextEditingController(),
+            controller: catchmentAreaQuotaController,
             label: 'Catchment Area Quota(%):',
           ),
           SizedBox(height: 10.h),
           TextFieldWithLabel(
-            controller: TextEditingController(),
+            controller: siblingQuotaController,
             label: 'Sibling Quota(%):',
           ),
           SizedBox(height: 20.h),
           GestureDetector(
             onTap: () {
-              controller.readDataFromExcelSheet();
+              controller.students.value = ResultLogic.getFq(
+                students: controller.students,
+                eligiblePercentage: double.parse(freedomFighterQuotaController.text),
+              );
             },
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 10.sp),
