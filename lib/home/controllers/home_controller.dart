@@ -40,6 +40,7 @@ class HomeController extends GetxController {
           );
         }
       }
+      students.removeAt(0);
     } catch (e) {
       developer.log('Error: $e', name: 'HomeController.readDataFromExcelSheet');
     }
