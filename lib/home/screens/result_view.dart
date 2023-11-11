@@ -30,7 +30,7 @@ class _RestulViewState extends State<ResultView> {
           IconButton(
             icon: const Icon(Icons.download),
             onPressed: () {
-              drawcontroller.createExcel();
+              drawcontroller.createExcel(context);
             },
           ),
         ],

@@ -5,15 +5,9 @@ import 'dart:io';
 import 'package:admission_lottery/home/controllers/home_controller.dart';
 import 'package:admission_lottery/models/student_model.dart';
 import 'package:excel/excel.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/instance_manager.dart';
-import 'package:get/state_manager.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
 import 'dart:developer' as developer show log;
 
 class DrawController extends GetxController {
@@ -143,39 +137,57 @@ class DrawController extends GetxController {
     developer.log('Left over students length in General: ${allStudents.length}');
   }
 
-  void createExcel() async {
+  void createExcel(BuildContext context) async {
     final excel = Excel.createExcel();
     Sheet sheetObject = excel['Sheet1'];
+
     sheetObject.appendRow(['Freedom Fighter Quota: (${fqAdmittedStudents.length})']);
     for (int i = 0; i < fqAdmittedStudents.length; i++) {
       sheetObject.appendRow([fqAdmittedStudents[i].roll]);
     }
+
     sheetObject.appendRow(['Education Quota:(${eqAdmittedStudents.length})']);
     for (int i = 0; i < eqAdmittedStudents.length; i++) {
       sheetObject.appendRow([eqAdmittedStudents[i].roll]);
     }
+    sheetObject.appendRow(['']);
     sheetObject.appendRow(['Catchment Area Quota:(${caqAdmittedStudents.length})']);
     for (int i = 0; i < caqAdmittedStudents.length; i++) {
       sheetObject.appendRow([caqAdmittedStudents[i].roll]);
     }
+    sheetObject.appendRow(['']);
     sheetObject.appendRow(['Sibling Quota:(${siblingAdmittedStudents.length})']);
     for (int i = 0; i < siblingAdmittedStudents.length; i++) {
       sheetObject.appendRow([siblingAdmittedStudents[i].roll]);
     }
+    sheetObject.appendRow(['']);
     sheetObject.appendRow(['General Quota: (${generalAdmittedStudents.length})']);
     for (int i = 0; i < generalAdmittedStudents.length; i++) {
       sheetObject.appendRow([generalAdmittedStudents[i].roll]);
     }
     final fileBytes = excel.save();
-    final dir = await getDownloadsDirectory();
-    File('${dir?.path}/result.xlsx')
+    final dir = await getApplicationDocumentsDirectory();
+    final filename = '${dir.path}/result_${DateTime.now().millisecondsSinceEpoch}.xlsx';
+    File(filename)
       ..createSync(recursive: true)
       ..writeAsBytesSync(fileBytes!);
-
-    // await FilePicker.platform.saveFile(
-    //   fileName: 'result.xlsx',
-    //   allowedExtensions: ['xlsx'],
-    //   dialogTitle: 'Please select a location to save the file',
-    // );
+    // ignore: use_build_context_synchronously
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Success'),
+          content: Text(filename),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
