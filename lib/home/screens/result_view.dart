@@ -130,6 +130,35 @@ class _RestulViewState extends State<ResultView> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
+                          'Sibling Quota:(${drawcontroller.siblingAdmittedStudents.length})',
+                          style: TextStyle(
+                            fontSize: 20.sp,
+                          ),
+                        ),
+                        SizedBox(height: 10.h),
+                        Column(
+                          children: [
+                            for (int i = 0; i < drawcontroller.siblingAdmittedStudents.length; i++)
+                              Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: Text(
+                                  drawcontroller.siblingAdmittedStudents[i].roll.toString(),
+                                  style: TextStyle(
+                                    fontSize: 20.sp,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(width: 50.w),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
                           'General Quota: ${drawcontroller.generalAdmittedStudents.length}',
                           style: TextStyle(
                             fontSize: 20.sp,
