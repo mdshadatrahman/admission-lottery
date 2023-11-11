@@ -30,7 +30,7 @@ class _LeftPartState extends State<LeftPart> {
   @override
   void initState() {
     super.initState();
-    controller.readDataFromExcelSheet();
+    // controller.readDataFromExcelSheet();
     studentToBeAdmittedController.text = '100';
     freedomFighterQuotaController.text = '5';
     educationQuotaController.text = '2';

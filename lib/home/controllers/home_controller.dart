@@ -1,11 +1,14 @@
+import 'dart:io';
 import 'package:admission_lottery/home/controllers/quota_eligible_students_controller.dart';
 import 'package:admission_lottery/models/student_model.dart';
 import 'package:excel/excel.dart';
-import 'package:flutter/services.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:get/state_manager.dart';
 import 'dart:developer' as developer show log;
 
 class HomeController extends GetxController {
+  RxBool isLoading = false.obs;
+
   RxInt selectedClass = 3.obs;
   RxString version = 'English'.obs;
   RxString shift = 'Morning'.obs;
@@ -17,13 +20,27 @@ class HomeController extends GetxController {
   RxList<Student> caqEligibleStudents = <Student>[].obs;
   RxList<Student> siblingEligibleStudents = <Student>[].obs;
 
-  final String excelFile = 'assets/dataset.xlsx';
-
-  readDataFromExcelSheet() async {
+  Future<void> pickFile() async {
+    isLoading.value = true;
     try {
-      ByteData data = await rootBundle.load(excelFile);
-      var bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['xlsx'],
+      );
+      if (result != null) {
+        readDataFromExcelSheet(result.files.single.path!);
+      }
+    } catch (e) {
+      developer.log('Error: $e', name: 'HomeController.pickFile');
+    }
+    isLoading.value = false;
+  }
+
+  readDataFromExcelSheet(String path) async {
+    try {
+      var bytes = File(path).readAsBytesSync();
       var excel = Excel.decodeBytes(bytes);
+
       students.clear();
       for (var table in excel.tables.keys) {
         for (var row in excel.tables[table]!.rows) {

@@ -39,7 +39,10 @@ class _HomeViewState extends State<HomeView> {
                   Expanded(
                     flex: 3,
                     child: Obx(
-                      () => RightPart(students: controller.students.value),
+                      () => RightPart(
+                        students: controller.students.value,
+                        isLoading: controller.isLoading.value,
+                      ),
                     ),
                   ),
                 ],
