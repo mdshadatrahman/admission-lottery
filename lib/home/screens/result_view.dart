@@ -1,4 +1,5 @@
 import 'package:admission_lottery/home/controllers/draw_controller.dart';
+import 'package:admission_lottery/home/controllers/home_controller.dart';
 import 'package:admission_lottery/main.dart';
 import 'package:admission_lottery/utils/app_colors.dart';
 import 'package:fluent_ui/fluent_ui.dart' as f;
@@ -25,6 +26,14 @@ class _RestulViewState extends State<ResultView> {
         backgroundColor: AppColors.primary,
         title: const Text('Result'),
         centerTitle: false,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.download),
+            onPressed: () {
+              drawcontroller.createExcel();
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.all(20.sp),
@@ -159,7 +168,7 @@ class _RestulViewState extends State<ResultView> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          'General Quota: ${drawcontroller.generalAdmittedStudents.length}',
+                          'General Quota: (${drawcontroller.generalAdmittedStudents.length})',
                           style: TextStyle(
                             fontSize: 20.sp,
                           ),
