@@ -118,14 +118,15 @@ class DrawController extends GetxController {
 
   void drawGeneralStudents({
     required int numberOfStudentsToBeAdmitted,
-    required int percentageOfSiblingQuota,
+    required int generalQuotaStudents,
   }) {
+    developer.log(generalQuotaStudents.toString());
     generalAdmittedStudents.value.clear();
     developer.log('All students length in General: ${allStudents.length}');
-    final numberOfGeneralEligibleStudents = (numberOfStudentsToBeAdmitted * percentageOfSiblingQuota / 100).round();
+    // final numberOfGeneralEligibleStudents = (numberOfStudentsToBeAdmitted * generalQuotaStudents / 100).round();
     allStudents.shuffle();
     for (int i = 0; i < allStudents.length; i++) {
-      if (generalAdmittedStudents.length == numberOfGeneralEligibleStudents) {
+      if (generalAdmittedStudents.length == generalQuotaStudents) {
         break;
       }
       generalAdmittedStudents.add(allStudents[i]);

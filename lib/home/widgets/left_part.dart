@@ -9,9 +9,6 @@ import 'package:admission_lottery/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:get/instance_manager.dart';
-import 'dart:developer' as developer show log;
 
 GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -294,23 +291,8 @@ class _LeftPartState extends State<LeftPart> {
                       drawController.siblingAdmittedStudents.length;
                   drawController.drawGeneralStudents(
                     numberOfStudentsToBeAdmitted: numberOfStudentsToBeAdmitted,
-                    percentageOfSiblingQuota: generalQuota, // Bug
+                    generalQuotaStudents: generalQuota,
                   );
-
-                  ///------------------ For debugging purpose only --------------------///
-
-                  final fq = drawController.fqAdmittedStudents.length;
-                  final eq = drawController.eqAdmittedStudents.length;
-                  final caq = drawController.caqAdmittedStudents.length;
-                  final sibling = drawController.siblingAdmittedStudents.length;
-                  developer.log('*********************************');
-                  developer.log('Student list in excel: ${controller.students.value.length}');
-                  developer.log('FQ: $fq');
-                  developer.log('EQ: $eq');
-                  developer.log('CAQ: $caq');
-                  developer.log('SIBLING: $sibling');
-                  developer.log('GENERAL: $generalQuota');
-                  developer.log('*********************************');
 
                   Navigator.push(
                     context,
