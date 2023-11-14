@@ -264,17 +264,18 @@ class _LeftPartState extends State<LeftPart> {
                   final drawController = Get.put(DrawController());
                   final int numberOfStudentsToBeAdmitted = int.tryParse(studentToBeAdmittedController.text) ?? 0;
                   final int percentageOfFqQuota = freedomFighterQuotaController.text.isEmpty ? 0 : int.tryParse(freedomFighterQuotaController.text) ?? 0;
-                  final int percentageOfEqQuota = educationQuotaController.text.isEmpty ? 0 : int.tryParse(educationQuotaController.text) ?? 0;
+                  // final int percentageOfEqQuota = educationQuotaController.text.isEmpty ? 0 : int.tryParse(educationQuotaController.text) ?? 0;
                   final int percentageOfCaqQuota = catchmentAreaQuotaController.text.isEmpty ? 0 : int.tryParse(catchmentAreaQuotaController.text) ?? 0;
                   final int percentageOfSiblingQuota = siblingQuotaController.text.isEmpty ? 0 : int.tryParse(siblingQuotaController.text) ?? 0;
+                  drawController.clearAll();
                   drawController.drawFqEligibleStudents(
                     numberOfStudentsToBeAdmitted: numberOfStudentsToBeAdmitted,
                     percentageOfFqQuota: percentageOfFqQuota,
                   );
-                  drawController.drawEqEligibleStudents(
-                    numberOfStudentsToBeAdmitted: numberOfStudentsToBeAdmitted,
-                    percentageOfEqQuota: percentageOfEqQuota,
-                  );
+                  // drawController.drawEqEligibleStudents(
+                  //   numberOfStudentsToBeAdmitted: numberOfStudentsToBeAdmitted,
+                  //   percentageOfEqQuota: percentageOfEqQuota,
+                  // );
                   drawController.drawCaqEligibleStudents(
                     numberOfStudentsToBeAdmitted: numberOfStudentsToBeAdmitted,
                     percentageOfCaqQuota: percentageOfCaqQuota,

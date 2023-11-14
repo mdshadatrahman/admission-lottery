@@ -1,6 +1,5 @@
 import 'package:admission_lottery/models/student_model.dart';
 import 'package:admission_lottery/utils/app_colors.dart';
-import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -48,20 +47,20 @@ class RightPart extends StatelessWidget {
                       ),
                       const SizedBox(width: 20),
                       SizedBox(
-                        width: 50.w,
+                        width: 100.w,
                         child: Text(
-                          'FQ',
+                          'Quota',
                           style: titleStyle(),
                         ),
                       ),
-                      const SizedBox(width: 20),
-                      SizedBox(
-                        width: 50.w,
-                        child: Text(
-                          'EQ',
-                          style: titleStyle(),
-                        ),
-                      ),
+                      // const SizedBox(width: 20),
+                      // SizedBox(
+                      //   width: 50.w,
+                      //   child: Text(
+                      //     'EQ',
+                      //     style: titleStyle(),
+                      //   ),
+                      // ),
                       const SizedBox(width: 20),
                       SizedBox(
                         width: 70.w,
@@ -116,20 +115,20 @@ class RightPart extends StatelessWidget {
                             ),
                             const SizedBox(width: 20),
                             SizedBox(
-                              width: 50.w,
+                              width: 100.w,
                               child: Text(
-                                students[index].isFq.toString(),
+                                students[index].isFqOrEq.toString(),
                                 style: bodyStyle(index),
                               ),
                             ),
-                            const SizedBox(width: 20),
-                            SizedBox(
-                              width: 50.w,
-                              child: Text(
-                                students[index].isEq.toString(),
-                                style: bodyStyle(index),
-                              ),
-                            ),
+                            // const SizedBox(width: 20),
+                            // SizedBox(
+                            //   width: 50.w,
+                            //   child: Text(
+                            //     students[index].isEq.toString(),
+                            //     style: bodyStyle(index),
+                            //   ),
+                            // ),
                             const SizedBox(width: 20),
                             SizedBox(
                               width: 70.w,

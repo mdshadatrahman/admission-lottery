@@ -1,5 +1,4 @@
 import 'package:admission_lottery/home/controllers/draw_controller.dart';
-import 'package:admission_lottery/home/controllers/home_controller.dart';
 import 'package:admission_lottery/main.dart';
 import 'package:admission_lottery/utils/app_colors.dart';
 import 'package:fluent_ui/fluent_ui.dart' as f;
@@ -17,7 +16,6 @@ class ResultView extends StatefulWidget {
 class _RestulViewState extends State<ResultView> {
   final drawcontroller = Get.put(DrawController());
   @override
-  //TODO Add loading state
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -52,7 +50,7 @@ class _RestulViewState extends State<ResultView> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          'Freedom Fighter Quota: (${drawcontroller.fqAdmittedStudents.length})',
+                          'EQ/FQ: (${drawcontroller.fqAdmittedStudents.length})',
                           style: TextStyle(
                             fontSize: 20.sp,
                           ),
@@ -76,34 +74,34 @@ class _RestulViewState extends State<ResultView> {
                       ],
                     ),
                     SizedBox(width: 50.w),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Education Quota:(${drawcontroller.eqAdmittedStudents.length})',
-                          style: TextStyle(
-                            fontSize: 20.sp,
-                          ),
-                        ),
-                        SizedBox(height: 10.h),
-                        Column(
-                          children: [
-                            for (int i = 0; i < drawcontroller.eqAdmittedStudents.length; i++)
-                              f.Padding(
-                                padding: const EdgeInsets.only(right: 8.0),
-                                child: Text(
-                                  drawcontroller.eqAdmittedStudents[i].roll.toString(),
-                                  style: TextStyle(
-                                    fontSize: 20.sp,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                          ],
-                        ),
-                      ],
-                    ),
+                    // Column(
+                    //   crossAxisAlignment: CrossAxisAlignment.start,
+                    //   mainAxisAlignment: MainAxisAlignment.start,
+                    //   children: [
+                    //     Text(
+                    //       'Education Quota:(${drawcontroller.eqAdmittedStudents.length})',
+                    //       style: TextStyle(
+                    //         fontSize: 20.sp,
+                    //       ),
+                    //     ),
+                    //     SizedBox(height: 10.h),
+                    //     Column(
+                    //       children: [
+                    //         for (int i = 0; i < drawcontroller.eqAdmittedStudents.length; i++)
+                    //           f.Padding(
+                    //             padding: const EdgeInsets.only(right: 8.0),
+                    //             child: Text(
+                    //               drawcontroller.eqAdmittedStudents[i].roll.toString(),
+                    //               style: TextStyle(
+                    //                 fontSize: 20.sp,
+                    //                 fontWeight: FontWeight.w600,
+                    //               ),
+                    //             ),
+                    //           ),
+                    //       ],
+                    //     ),
+                    //   ],
+                    // ),
                     SizedBox(width: 50.w),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

@@ -48,11 +48,10 @@ class HomeController extends GetxController {
             Student(
               sl: row[0]?.value.toString(),
               roll: row[1]?.value.toString(),
-              isFq: row[2]?.value.toString(),
-              isEq: row[3]?.value.toString(),
-              isCaq: row[4]?.value.toString(),
-              isSibling: row[5]?.value.toString(),
-              isGeneral: row[6]?.value.toString(),
+              isFqOrEq: row[2]?.value.toString(),
+              isCaq: row[3]?.value.toString(),
+              isSibling: row[4]?.value.toString(),
+              isGeneral: row[5]?.value.toString(),
             ),
           );
         }
@@ -64,12 +63,12 @@ class HomeController extends GetxController {
   }
 
   void filterStudents() {
-    fqEligibleStudents.value = QuotaEligibleStudentsController.getFqEligibleStudents(
+    fqEligibleStudents.value = QuotaEligibleStudentsController.getFqOrEqEligibleStudents(
       students: students,
     );
-    eqEligibleStudents.value = QuotaEligibleStudentsController.getEqEligibleStudents(
-      students: students,
-    );
+    // eqEligibleStudents.value = QuotaEligibleStudentsController.getEqEligibleStudents(
+    //   students: students,
+    // );
     caqEligibleStudents.value = QuotaEligibleStudentsController.getCaqEligibleStudents(
       students: students,
     );

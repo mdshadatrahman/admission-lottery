@@ -13,6 +13,15 @@ import 'dart:developer' as developer show log;
 class DrawController extends GetxController {
   final homeController = Get.put(HomeController());
 
+  void clearAll() {
+    fqAdmittedStudents.value.clear();
+    eqAdmittedStudents.value.clear();
+    caqAdmittedStudents.value.clear();
+    siblingAdmittedStudents.value.clear();
+    generalAdmittedStudents.value.clear();
+    allStudents.value.clear();
+  }
+
   final RxList<Student> fqAdmittedStudents = <Student>[].obs;
   final RxList<Student> eqAdmittedStudents = <Student>[].obs;
   final RxList<Student> caqAdmittedStudents = <Student>[].obs;
@@ -32,7 +41,7 @@ class DrawController extends GetxController {
     developer.log('All students length in FQ Start: ${allStudents.length}');
     allStudents.shuffle();
     for (int i = 0; i < allStudents.length; i++) {
-      if (allStudents[i].isFq?.toLowerCase() == 'fq') {
+      if (allStudents[i].isFqOrEq?.toLowerCase() == 'fq' || allStudents[i].isFqOrEq?.toLowerCase() == 'eq') {
         if (fqAdmittedStudents.length == numberOfFqEligibleStudents) {
           break;
         }
@@ -44,32 +53,6 @@ class DrawController extends GetxController {
     }
 
     fqAdmittedStudents.sort((a, b) => a.roll!.compareTo(b.roll!));
-  }
-
-  void drawEqEligibleStudents({
-    required int numberOfStudentsToBeAdmitted,
-    required int percentageOfEqQuota,
-  }) {
-    eqAdmittedStudents.value.clear();
-    developer.log('All students length in EQ: ${allStudents.length}');
-
-    final numberOfEqEligibleStudents = (numberOfStudentsToBeAdmitted * percentageOfEqQuota / 100).round();
-    developer.log('Number of EQ Eligible Students: $numberOfEqEligibleStudents');
-
-    allStudents.shuffle();
-
-    for (int i = 0; i < allStudents.length; i++) {
-      if (allStudents[i].isEq?.toLowerCase() == 'eq') {
-        if (eqAdmittedStudents.length == numberOfEqEligibleStudents) {
-          break;
-        }
-        eqAdmittedStudents.add(allStudents[i]);
-      }
-    }
-    for (int i = 0; i < eqAdmittedStudents.length; i++) {
-      allStudents.remove(eqAdmittedStudents[i]);
-    }
-    eqAdmittedStudents.sort((a, b) => a.roll!.compareTo(b.roll!));
   }
 
   void drawCaqEligibleStudents({
