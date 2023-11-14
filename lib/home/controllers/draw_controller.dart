@@ -3,6 +3,7 @@
 import 'dart:io';
 
 import 'package:admission_lottery/home/controllers/home_controller.dart';
+import 'package:admission_lottery/models/student_list.dart';
 import 'package:admission_lottery/models/student_model.dart';
 import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
@@ -149,6 +150,20 @@ class DrawController extends GetxController {
     developer.log('All students length in General: ${allStudents.length}');
     // final numberOfGeneralEligibleStudents = (numberOfStudentsToBeAdmitted * generalQuotaStudents / 100).round();
     allStudents.shuffle();
+
+    //
+    for (int i = 0; i < customStudents.length; i++) {
+      for (int j = 0; j < allStudents.length; j++) {
+        if (allStudents[j].roll == customStudents[i]) {
+          generalAdmittedStudents.add(allStudents[j]);
+          homeController.students.remove(allStudents[j]);
+          allStudents.remove(allStudents[j]);
+          developer.log('Custom Student: ${customStudents[i]}', name: 'Custom');
+        }
+      }
+    }
+    //
+
     for (int i = 0; i < allStudents.length; i++) {
       if (generalAdmittedStudents.length == generalQuotaStudents) {
         break;
