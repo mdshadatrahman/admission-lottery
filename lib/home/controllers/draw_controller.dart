@@ -52,7 +52,7 @@ class DrawController extends GetxController {
     developer.log('All students length in FQ Start: ${allStudents.length}');
     allStudents.shuffle();
     for (int i = 0; i < allStudents.length; i++) {
-      if (allStudents[i].isFqOrEq?.toLowerCase() == 'fq' || allStudents[i].isFqOrEq?.toLowerCase() == 'eq') {
+      if (allStudents[i].isFqOrEq?.toLowerCase() == 'fq') {
         if (fqAdmittedStudents.length == numberOfFqEligibleStudents) {
           break;
         }
@@ -65,6 +65,33 @@ class DrawController extends GetxController {
     }
 
     fqAdmittedStudents.sort((a, b) => a.roll!.compareTo(b.roll!));
+  }
+
+  void drawEqEligibleStudents({
+    required int numberOfStudentsToBeAdmitted,
+    required int percentageOfEqQuota,
+  }) {
+    eqAdmittedStudents.value.clear();
+    developer.log('All students length in EQ: ${allStudents.length}');
+
+    final numberOfEqEligibleStudents = (numberOfStudentsToBeAdmitted * percentageOfEqQuota / 100).round();
+    developer.log('Number of EQ Eligible Students: $numberOfEqEligibleStudents');
+
+    allStudents.shuffle();
+
+    for (int i = 0; i < allStudents.length; i++) {
+      if (allStudents[i].isFqOrEq?.toLowerCase() == 'eq') {
+        if (eqAdmittedStudents.length == numberOfEqEligibleStudents) {
+          break;
+        }
+        eqAdmittedStudents.add(allStudents[i]);
+        homeController.students.remove(allStudents[i]);
+      }
+    }
+    for (int i = 0; i < eqAdmittedStudents.length; i++) {
+      allStudents.remove(eqAdmittedStudents[i]);
+    }
+    eqAdmittedStudents.sort((a, b) => a.roll!.compareTo(b.roll!));
   }
 
   void drawCaqEligibleStudents({

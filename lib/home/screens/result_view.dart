@@ -58,7 +58,7 @@ class _RestulViewState extends State<ResultView> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          'EQ/FQ: (${drawcontroller.fqAdmittedStudents.length})',
+                          'Freedom Fighter Quota: (${drawcontroller.fqAdmittedStudents.length})',
                           style: TextStyle(
                             fontSize: 20.sp,
                           ),
@@ -82,34 +82,34 @@ class _RestulViewState extends State<ResultView> {
                       ],
                     ),
                     SizedBox(width: 50.w),
-                    // Column(
-                    //   crossAxisAlignment: CrossAxisAlignment.start,
-                    //   mainAxisAlignment: MainAxisAlignment.start,
-                    //   children: [
-                    //     Text(
-                    //       'Education Quota:(${drawcontroller.eqAdmittedStudents.length})',
-                    //       style: TextStyle(
-                    //         fontSize: 20.sp,
-                    //       ),
-                    //     ),
-                    //     SizedBox(height: 10.h),
-                    //     Column(
-                    //       children: [
-                    //         for (int i = 0; i < drawcontroller.eqAdmittedStudents.length; i++)
-                    //           f.Padding(
-                    //             padding: const EdgeInsets.only(right: 8.0),
-                    //             child: Text(
-                    //               drawcontroller.eqAdmittedStudents[i].roll.toString(),
-                    //               style: TextStyle(
-                    //                 fontSize: 20.sp,
-                    //                 fontWeight: FontWeight.w600,
-                    //               ),
-                    //             ),
-                    //           ),
-                    //       ],
-                    //     ),
-                    //   ],
-                    // ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Education Quota:(${drawcontroller.eqAdmittedStudents.length})',
+                          style: TextStyle(
+                            fontSize: 20.sp,
+                          ),
+                        ),
+                        SizedBox(height: 10.h),
+                        Column(
+                          children: [
+                            for (int i = 0; i < drawcontroller.eqAdmittedStudents.length; i++)
+                              f.Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: Text(
+                                  drawcontroller.eqAdmittedStudents[i].roll.toString(),
+                                  style: TextStyle(
+                                    fontSize: 20.sp,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ],
+                    ),
                     SizedBox(width: 50.w),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
