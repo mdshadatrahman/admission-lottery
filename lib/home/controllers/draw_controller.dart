@@ -22,6 +22,17 @@ class DrawController extends GetxController {
     allStudents.value.clear();
   }
 
+  @override
+  void dispose() {
+    clearAll();
+    fqAdmittedStudents.clear();
+    eqAdmittedStudents.clear();
+    caqAdmittedStudents.clear();
+    siblingAdmittedStudents.clear();
+    generalAdmittedStudents.clear();
+    super.dispose();
+  }
+
   final RxList<Student> fqAdmittedStudents = <Student>[].obs;
   final RxList<Student> eqAdmittedStudents = <Student>[].obs;
   final RxList<Student> caqAdmittedStudents = <Student>[].obs;
@@ -46,6 +57,7 @@ class DrawController extends GetxController {
           break;
         }
         fqAdmittedStudents.add(allStudents[i]);
+        homeController.students.remove(allStudents[i]);
       }
     }
     for (int i = 0; i < fqAdmittedStudents.length; i++) {
@@ -69,6 +81,7 @@ class DrawController extends GetxController {
           break;
         }
         caqAdmittedStudents.add(allStudents[i]);
+        homeController.students.remove(allStudents[i]);
       }
     }
     for (int i = 0; i < caqAdmittedStudents.length; i++) {
@@ -91,6 +104,7 @@ class DrawController extends GetxController {
           break;
         }
         siblingAdmittedStudents.add(allStudents[i]);
+        homeController.students.remove(allStudents[i]);
       }
     }
     for (int i = 0; i < siblingAdmittedStudents.length; i++) {
@@ -113,12 +127,14 @@ class DrawController extends GetxController {
         break;
       }
       generalAdmittedStudents.add(allStudents[i]);
+      homeController.students.remove(allStudents[i]);
     }
     for (int i = 0; i < generalAdmittedStudents.length; i++) {
       allStudents.remove(generalAdmittedStudents[i]);
     }
     generalAdmittedStudents.sort((a, b) => a.roll!.compareTo(b.roll!));
-    developer.log('Left over students length in General: ${allStudents.length}');
+    developer.log('Left over students length in General: ${allStudents.length}', name: 'General');
+    allStudents.sort((a, b) => a.sl!.compareTo(b.sl!));
   }
 
   void createExcel(BuildContext context) async {

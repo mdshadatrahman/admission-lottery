@@ -4,6 +4,7 @@ import 'package:admission_lottery/utils/app_colors.dart';
 import 'package:fluent_ui/fluent_ui.dart' as f;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 
 class ResultView extends StatefulWidget {
@@ -24,6 +25,13 @@ class _RestulViewState extends State<ResultView> {
         backgroundColor: AppColors.primary,
         title: const Text('Result'),
         centerTitle: false,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop();
+            drawcontroller.dispose();
+          },
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.download),
