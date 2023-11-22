@@ -1,4 +1,4 @@
-// ignore_for_file: invalid_use_of_protected_member
+// ignore_for_file: invalid_use_of_protected_member, use_build_context_synchronously
 
 import 'dart:io';
 
@@ -9,6 +9,8 @@ import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
 import 'dart:developer' as developer show log;
 
 class DrawController extends GetxController {
@@ -213,7 +215,129 @@ class DrawController extends GetxController {
     File(filename)
       ..createSync(recursive: true)
       ..writeAsBytesSync(fileBytes!);
-    // ignore: use_build_context_synchronously
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Success'),
+          content: Text(filename),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> generatePdf(BuildContext context) async {
+    final pdf = pw.Document();
+    pdf.addPage(
+      pw.Page(
+        pageFormat: PdfPageFormat.a4,
+        margin: const pw.EdgeInsets.all(10),
+        clip: false,
+        build: (pw.Context context) {
+          return pw.SizedBox(
+            width: 300,
+            child: pw.Row(
+              children: [
+                pw.Expanded(
+                  child: pw.Column(
+                    crossAxisAlignment: pw.CrossAxisAlignment.start,
+                    mainAxisAlignment: pw.MainAxisAlignment.center,
+                    children: [
+                      pw.Row(
+                        children: [
+                          pw.Text(
+                            'Freedom Fighter Quota: (${fqAdmittedStudents.length}): ',
+                            style: const pw.TextStyle(
+                              fontSize: 8,
+                            ),
+                          ),
+                          for (int i = 0; i < fqAdmittedStudents.length; i++)
+                            pw.Text(
+                              '${fqAdmittedStudents[i].roll!}, ${i == 5 ? '\n' : ''}',
+                              style: const pw.TextStyle(fontSize: 8),
+                            ),
+                        ],
+                      ),
+                      pw.Row(
+                        children: [
+                          pw.Text(
+                            '\nEducation Quota:(${eqAdmittedStudents.length}): ',
+                            style: const pw.TextStyle(fontSize: 8),
+                          ),
+                          for (int i = 0; i < eqAdmittedStudents.length; i++)
+                            pw.Text(
+                              '${eqAdmittedStudents[i].roll!}, ${i == 5 ? '\n' : ''}',
+                              style: const pw.TextStyle(fontSize: 8),
+                            ),
+                        ],
+                      ),
+                      pw.Row(
+                        children: [
+                          pw.Text(
+                            '\nCatchment Area Quota:(${caqAdmittedStudents.length}): ',
+                            style: const pw.TextStyle(fontSize: 8),
+                          ),
+                          for (int i = 0; i < caqAdmittedStudents.length; i++)
+                            pw.Text(
+                              '${caqAdmittedStudents[i].roll!}, ${i == 5 ? '\n' : ''}',
+                              style: const pw.TextStyle(fontSize: 8),
+                            ),
+                        ],
+                      ),
+                      pw.Row(
+                        children: [
+                          pw.Text(
+                            '\nSibling Quota:(${siblingAdmittedStudents.length}): ',
+                            style: const pw.TextStyle(fontSize: 8),
+                          ),
+                          for (int i = 0; i < siblingAdmittedStudents.length; i++)
+                            pw.Text(
+                              '${siblingAdmittedStudents[i].roll!}, ',
+                              style: const pw.TextStyle(fontSize: 8),
+                            ),
+                        ],
+                      ),
+                      pw.Row(
+                        children: [
+                          pw.Text(
+                            '\nGeneral Quota: (${generalAdmittedStudents.length}): ',
+                            style: const pw.TextStyle(fontSize: 8),
+                          ),
+                          for (int i = 0; i < generalAdmittedStudents.length; i++)
+                            pw.Text(
+                              '${generalAdmittedStudents[i].roll!}, ',
+                              style: const pw.TextStyle(fontSize: 8),
+                            ),
+                        ],
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          );
+        },
+      ),
+    );
+
+    final fileBytes = await pdf.save();
+    final dir = await getApplicationDocumentsDirectory();
+    final filename = '${dir.path}/result_${DateTime.now().millisecondsSinceEpoch}.pdf';
+    File(filename)
+      ..createSync(recursive: true)
+      ..writeAsBytesSync(fileBytes);
+    // final file = File('example.pdf');
+    // await file.writeAsBytes(await pdf.save());
+    developer.log('path: $filename', name: 'PDF');
     showDialog(
       context: context,
       builder: (context) {

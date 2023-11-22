@@ -166,6 +166,39 @@ class _LeftPartState extends State<LeftPart> {
                   ),
                 ],
               ),
+              SizedBox(height: 10.h),
+              Row(
+                children: [
+                  Text(
+                    'Resident Status:',
+                    style: TextStyle(
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.onTertiaryContainer,
+                    ),
+                  ),
+                  const Expanded(child: SizedBox()),
+                  Obx(
+                    () => DropdownButton(
+                      value: controller.res.value,
+                      underline: const SizedBox(),
+                      items: [
+                        DropdownMenuItem(
+                          value: 'Mandatory Resident',
+                          child: Text('Mandatory Resident', style: TextStyle(fontSize: 20.sp)),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Non-resident',
+                          child: Text('Non-resident', style: TextStyle(fontSize: 20.sp)),
+                        ),
+                      ],
+                      onChanged: (v) {
+                        controller.res.value = v as String;
+                      },
+                    ),
+                  ),
+                ],
+              ),
               SizedBox(height: 20.h),
               TextFieldWithLabel(
                 controller: studentToBeAdmittedController,
