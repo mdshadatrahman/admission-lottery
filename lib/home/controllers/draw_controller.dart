@@ -243,87 +243,90 @@ class DrawController extends GetxController {
         margin: const pw.EdgeInsets.all(10),
         clip: false,
         build: (pw.Context context) {
-          return pw.SizedBox(
-            width: 300,
-            child: pw.Row(
-              children: [
-                pw.Expanded(
-                  child: pw.Column(
-                    crossAxisAlignment: pw.CrossAxisAlignment.start,
-                    mainAxisAlignment: pw.MainAxisAlignment.center,
-                    children: [
-                      pw.Row(
-                        children: [
-                          pw.Text(
-                            'Freedom Fighter Quota: (${fqAdmittedStudents.length}): ',
-                            style: const pw.TextStyle(
-                              fontSize: 8,
-                            ),
+          return pw.Column(
+            children: [
+              pw.SizedBox(height: 120),
+              pw.Expanded(
+                child: pw.Row(
+                  crossAxisAlignment: pw.CrossAxisAlignment.start,
+                  mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                  children: [
+                    pw.Column(
+                      children: [
+                        pw.Text(
+                          'Freedom Fighter Quota: (${fqAdmittedStudents.length})',
+                          style: const pw.TextStyle(
+                            fontSize: 8,
                           ),
-                          for (int i = 0; i < fqAdmittedStudents.length; i++)
-                            pw.Text(
-                              '${fqAdmittedStudents[i].roll!}, ${i == 5 ? '\n' : ''}',
-                              style: const pw.TextStyle(fontSize: 8),
-                            ),
-                        ],
-                      ),
-                      pw.Row(
-                        children: [
+                        ),
+                        pw.SizedBox(height: 10),
+                        for (int i = 0; i < fqAdmittedStudents.length; i++)
                           pw.Text(
-                            '\nEducation Quota:(${eqAdmittedStudents.length}): ',
+                            fqAdmittedStudents[i].roll!,
                             style: const pw.TextStyle(fontSize: 8),
                           ),
-                          for (int i = 0; i < eqAdmittedStudents.length; i++)
-                            pw.Text(
-                              '${eqAdmittedStudents[i].roll!}, ${i == 5 ? '\n' : ''}',
-                              style: const pw.TextStyle(fontSize: 8),
-                            ),
-                        ],
-                      ),
-                      pw.Row(
-                        children: [
+                      ],
+                    ),
+                    pw.Column(
+                      children: [
+                        pw.Text(
+                          '\nEducation Quota:(${eqAdmittedStudents.length})',
+                          style: const pw.TextStyle(fontSize: 8),
+                        ),
+                        pw.SizedBox(height: 10),
+                        for (int i = 0; i < eqAdmittedStudents.length; i++)
                           pw.Text(
-                            '\nCatchment Area Quota:(${caqAdmittedStudents.length}): ',
+                            eqAdmittedStudents[i].roll!,
                             style: const pw.TextStyle(fontSize: 8),
                           ),
-                          for (int i = 0; i < caqAdmittedStudents.length; i++)
-                            pw.Text(
-                              '${caqAdmittedStudents[i].roll!}, ${i == 5 ? '\n' : ''}',
-                              style: const pw.TextStyle(fontSize: 8),
-                            ),
-                        ],
-                      ),
-                      pw.Row(
-                        children: [
+                      ],
+                    ),
+                    pw.Column(
+                      children: [
+                        pw.Text(
+                          '\nCatchment Area Quota:(${caqAdmittedStudents.length})',
+                          style: const pw.TextStyle(fontSize: 8),
+                        ),
+                        pw.SizedBox(height: 10),
+                        for (int i = 0; i < caqAdmittedStudents.length; i++)
                           pw.Text(
-                            '\nSibling Quota:(${siblingAdmittedStudents.length}): ',
+                            caqAdmittedStudents[i].roll!,
                             style: const pw.TextStyle(fontSize: 8),
                           ),
-                          for (int i = 0; i < siblingAdmittedStudents.length; i++)
-                            pw.Text(
-                              '${siblingAdmittedStudents[i].roll!}, ',
-                              style: const pw.TextStyle(fontSize: 8),
-                            ),
-                        ],
-                      ),
-                      pw.Row(
-                        children: [
+                      ],
+                    ),
+                    pw.Column(
+                      children: [
+                        pw.Text(
+                          '\nSibling Quota:(${siblingAdmittedStudents.length})',
+                          style: const pw.TextStyle(fontSize: 8),
+                        ),
+                        pw.SizedBox(height: 10),
+                        for (int i = 0; i < siblingAdmittedStudents.length; i++)
                           pw.Text(
-                            '\nGeneral Quota: (${generalAdmittedStudents.length}): ',
+                            siblingAdmittedStudents[i].roll!,
                             style: const pw.TextStyle(fontSize: 8),
                           ),
-                          for (int i = 0; i < generalAdmittedStudents.length; i++)
-                            pw.Text(
-                              '${generalAdmittedStudents[i].roll!}, ',
-                              style: const pw.TextStyle(fontSize: 8),
-                            ),
-                        ],
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
+                      ],
+                    ),
+                    pw.Column(
+                      children: [
+                        pw.Text(
+                          '\nGeneral Quota: (${generalAdmittedStudents.length})',
+                          style: const pw.TextStyle(fontSize: 8),
+                        ),
+                        pw.SizedBox(height: 10),
+                        for (int i = 0; i < generalAdmittedStudents.length; i++)
+                          pw.Text(
+                            generalAdmittedStudents[i].roll!,
+                            style: const pw.TextStyle(fontSize: 8),
+                          ),
+                      ],
+                    ),
+                  ],
+                ),
+              )
+            ],
           );
         },
       ),
