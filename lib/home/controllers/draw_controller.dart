@@ -3,7 +3,6 @@
 import 'dart:io';
 
 import 'package:admission_lottery/home/controllers/home_controller.dart';
-import 'package:admission_lottery/models/student_list.dart';
 import 'package:admission_lottery/models/student_model.dart';
 import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +10,6 @@ import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'dart:developer' as developer show log;
 
 class DrawController extends GetxController {
   final homeController = Get.put(HomeController());
@@ -49,25 +47,23 @@ class DrawController extends GetxController {
     required int percentageOfFqQuota,
   }) {
     allStudents.addAll(homeController.students.value);
-    int numberOfFqEligibleStudents = (numberOfStudentsToBeAdmitted * percentageOfFqQuota / 100).round();
-    fqAdmittedStudents.value.clear();
-
-    developer.log('All students length in FQ Start: ${allStudents.length}');
-    allStudents.shuffle();
+    int numberOfFqEligibleStudents = (numberOfStudentsToBeAdmitted * percentageOfFqQuota / 100).round(); // 3.0 -> 3,  3.25 -> 3, 3.5 -> 4, 3.75 -> 4, -3.5 -> -4
+    fqAdmittedStudents.value.clear(); // clear the list
+    allStudents.shuffle(); // Randomize the list
     for (int i = 0; i < allStudents.length; i++) {
       if (allStudents[i].isFqOrEq?.toLowerCase() == 'fq') {
         if (fqAdmittedStudents.length == numberOfFqEligibleStudents) {
-          break;
+          break; // break the loop
         }
-        fqAdmittedStudents.add(allStudents[i]);
-        homeController.students.remove(allStudents[i]);
+        fqAdmittedStudents.add(allStudents[i]); // add the student to the list
+        homeController.students.remove(allStudents[i]); // remove the student from the main list
       }
     }
     for (int i = 0; i < fqAdmittedStudents.length; i++) {
-      allStudents.remove(fqAdmittedStudents[i]);
+      allStudents.remove(fqAdmittedStudents[i]); // remove the student from the all students list
     }
 
-    fqAdmittedStudents.sort((a, b) => a.roll!.compareTo(b.roll!));
+    fqAdmittedStudents.sort((a, b) => a.roll!.compareTo(b.roll!)); // sort the list
   }
 
   void drawEqEligibleStudents({
@@ -75,13 +71,8 @@ class DrawController extends GetxController {
     required int percentageOfEqQuota,
   }) {
     eqAdmittedStudents.value.clear();
-    developer.log('All students length in EQ: ${allStudents.length}');
-
     final numberOfEqEligibleStudents = (numberOfStudentsToBeAdmitted * percentageOfEqQuota / 100).round();
-    developer.log('Number of EQ Eligible Students: $numberOfEqEligibleStudents');
-
     allStudents.shuffle();
-
     for (int i = 0; i < allStudents.length; i++) {
       if (allStudents[i].isFqOrEq?.toLowerCase() == 'eq') {
         if (eqAdmittedStudents.length == numberOfEqEligibleStudents) {
@@ -102,7 +93,6 @@ class DrawController extends GetxController {
     required int percentageOfCaqQuota,
   }) {
     caqAdmittedStudents.value.clear();
-    developer.log('All students length in CAQ: ${allStudents.length}');
     final numberOfCaqEligibleStudents = (numberOfStudentsToBeAdmitted * percentageOfCaqQuota / 100).round();
     allStudents.shuffle();
     for (int i = 0; i < allStudents.length; i++) {
@@ -125,7 +115,6 @@ class DrawController extends GetxController {
     required int percentageOfSiblingQuota,
   }) {
     siblingAdmittedStudents.value.clear();
-    developer.log('All students length in Sibling: ${allStudents.length}');
     final numberOfSiblingEligibleStudents = (numberOfStudentsToBeAdmitted * percentageOfSiblingQuota / 100).round();
     allStudents.shuffle();
     for (int i = 0; i < allStudents.length; i++) {
@@ -147,24 +136,8 @@ class DrawController extends GetxController {
     required int numberOfStudentsToBeAdmitted,
     required int generalQuotaStudents,
   }) {
-    developer.log(generalQuotaStudents.toString());
     generalAdmittedStudents.value.clear();
-    developer.log('All students length in General: ${allStudents.length}');
-    // final numberOfGeneralEligibleStudents = (numberOfStudentsToBeAdmitted * generalQuotaStudents / 100).round();
     allStudents.shuffle();
-
-    //
-    for (int i = 0; i < customStudents.length; i++) {
-      for (int j = 0; j < allStudents.length; j++) {
-        if (allStudents[j].roll == customStudents[i]) {
-          generalAdmittedStudents.add(allStudents[j]);
-          homeController.students.remove(allStudents[j]);
-          allStudents.remove(allStudents[j]);
-          developer.log('Custom Student: ${customStudents[i]}', name: 'Custom');
-        }
-      }
-    }
-    //
 
     for (int i = 0; i < allStudents.length; i++) {
       if (generalAdmittedStudents.length == generalQuotaStudents) {
@@ -177,10 +150,10 @@ class DrawController extends GetxController {
       allStudents.remove(generalAdmittedStudents[i]);
     }
     generalAdmittedStudents.sort((a, b) => a.roll!.compareTo(b.roll!));
-    developer.log('Left over students length in General: ${allStudents.length}', name: 'General');
     allStudents.sort((a, b) => a.sl!.compareTo(b.sl!));
   }
 
+  /// This function is used to generate excel file
   void createExcel(BuildContext context) async {
     final excel = Excel.createExcel();
     Sheet sheetObject = excel['Sheet1'];
@@ -235,6 +208,7 @@ class DrawController extends GetxController {
     );
   }
 
+  /// This function is used to generate pdf file
   Future<void> generatePdf(BuildContext context) async {
     final pdf = pw.Document();
     pdf.addPage(
@@ -340,7 +314,6 @@ class DrawController extends GetxController {
       ..writeAsBytesSync(fileBytes);
     // final file = File('example.pdf');
     // await file.writeAsBytes(await pdf.save());
-    developer.log('path: $filename', name: 'PDF');
     showDialog(
       context: context,
       builder: (context) {
