@@ -158,29 +158,29 @@ class DrawController extends GetxController {
     final excel = Excel.createExcel();
     Sheet sheetObject = excel['Sheet1'];
 
-    sheetObject.appendRow(['Freedom Fighter Quota: (${fqAdmittedStudents.length})']);
+    sheetObject.appendRow([TextCellValue('Freedom Fighter Quota: (${fqAdmittedStudents.length})')]);
     for (int i = 0; i < fqAdmittedStudents.length; i++) {
-      sheetObject.appendRow([fqAdmittedStudents[i].roll]);
+      sheetObject.appendRow([TextCellValue(fqAdmittedStudents[i].roll ?? '')]);
     }
 
-    sheetObject.appendRow(['Education Quota:(${eqAdmittedStudents.length})']);
+    sheetObject.appendRow([TextCellValue('Education Quota:(${eqAdmittedStudents.length})')]);
     for (int i = 0; i < eqAdmittedStudents.length; i++) {
-      sheetObject.appendRow([eqAdmittedStudents[i].roll]);
+      sheetObject.appendRow([TextCellValue(eqAdmittedStudents[i].roll ?? '')]);
     }
-    sheetObject.appendRow(['']);
-    sheetObject.appendRow(['Catchment Area Quota:(${caqAdmittedStudents.length})']);
+    sheetObject.appendRow([TextCellValue('')]);
+    sheetObject.appendRow([TextCellValue('Catchment Area Quota:(${caqAdmittedStudents.length})')]);
     for (int i = 0; i < caqAdmittedStudents.length; i++) {
-      sheetObject.appendRow([caqAdmittedStudents[i].roll]);
+      sheetObject.appendRow([TextCellValue(caqAdmittedStudents[i].roll ?? '')]);
     }
-    sheetObject.appendRow(['']);
-    sheetObject.appendRow(['Sibling Quota:(${siblingAdmittedStudents.length})']);
+    sheetObject.appendRow([TextCellValue('')]);
+    sheetObject.appendRow([TextCellValue('Sibling Quota:(${siblingAdmittedStudents.length})')]);
     for (int i = 0; i < siblingAdmittedStudents.length; i++) {
-      sheetObject.appendRow([siblingAdmittedStudents[i].roll]);
+      sheetObject.appendRow([TextCellValue(siblingAdmittedStudents[i].roll ?? '')]);
     }
-    sheetObject.appendRow(['']);
-    sheetObject.appendRow(['General Quota: (${generalAdmittedStudents.length})']);
+    sheetObject.appendRow([TextCellValue('')]);
+    sheetObject.appendRow([TextCellValue('General Quota: (${generalAdmittedStudents.length})')]);
     for (int i = 0; i < generalAdmittedStudents.length; i++) {
-      sheetObject.appendRow([generalAdmittedStudents[i].roll]);
+      sheetObject.appendRow([TextCellValue(generalAdmittedStudents[i].roll ?? '')]);
     }
     final fileBytes = excel.save();
     final dir = await getApplicationDocumentsDirectory();
