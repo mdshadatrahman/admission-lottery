@@ -38,6 +38,9 @@ class DrawController extends GetxController {
   final RxList<Student> eqAdmittedStudents = <Student>[].obs;
   final RxList<Student> caqAdmittedStudents = <Student>[].obs;
   final RxList<Student> siblingAdmittedStudents = <Student>[].obs;
+  final RxList<Student> twinAdmittedStudents = <Student>[].obs;
+  final RxList<Student> lillahBoardingAdmittedStudents = <Student>[].obs;
+  final RxList<Student> disabilityAdmittedStudents = <Student>[].obs;
   final RxList<Student> generalAdmittedStudents = <Student>[].obs;
 
   final RxList<Student> allStudents = <Student>[].obs;
@@ -51,7 +54,7 @@ class DrawController extends GetxController {
     fqAdmittedStudents.value.clear(); // clear the list
     allStudents.shuffle(); // Randomize the list
     for (int i = 0; i < allStudents.length; i++) {
-      if (allStudents[i].isFqOrEq?.toLowerCase() == 'fq') {
+      if (allStudents[i].isFq?.toLowerCase() == 'yes') {
         if (fqAdmittedStudents.length == numberOfFqEligibleStudents) {
           break; // break the loop
         }
@@ -74,7 +77,7 @@ class DrawController extends GetxController {
     final numberOfEqEligibleStudents = (numberOfStudentsToBeAdmitted * percentageOfEqQuota / 100).round();
     allStudents.shuffle();
     for (int i = 0; i < allStudents.length; i++) {
-      if (allStudents[i].isFqOrEq?.toLowerCase() == 'eq') {
+      if (allStudents[i].isEq?.toLowerCase() == 'yes') {
         if (eqAdmittedStudents.length == numberOfEqEligibleStudents) {
           break;
         }
@@ -132,6 +135,72 @@ class DrawController extends GetxController {
     siblingAdmittedStudents.sort((a, b) => a.roll!.compareTo(b.roll!));
   }
 
+  void drawTwinEligibleStudents({
+    required int numberOfStudentsToBeAdmitted,
+    required int percentageOfTwinQuota,
+  }) {
+    twinAdmittedStudents.value.clear();
+    final numberOfTwinEligibleStudents = (numberOfStudentsToBeAdmitted * percentageOfTwinQuota / 100).round();
+    allStudents.shuffle();
+    for (int i = 0; i < allStudents.length; i++) {
+      if (allStudents[i].isTwin?.toLowerCase() == 'yes') {
+        if (twinAdmittedStudents.length == numberOfTwinEligibleStudents) {
+          break;
+        }
+        twinAdmittedStudents.add(allStudents[i]);
+        homeController.students.remove(allStudents[i]);
+      }
+    }
+    for (int i = 0; i < twinAdmittedStudents.length; i++) {
+      allStudents.remove(twinAdmittedStudents[i]);
+    }
+    twinAdmittedStudents.sort((a, b) => a.roll!.compareTo(b.roll!));
+  }
+
+  void drawLillahBoardingEligibleStudents({
+    required int numberOfStudentsToBeAdmitted,
+    required int percentageOfLillahBoardingQuota,
+  }) {
+    lillahBoardingAdmittedStudents.value.clear();
+    final numberOfLillahBoardingEligibleStudents = (numberOfStudentsToBeAdmitted * percentageOfLillahBoardingQuota / 100).round();
+    allStudents.shuffle();
+    for (int i = 0; i < allStudents.length; i++) {
+      if (allStudents[i].isLillahBoarding?.toLowerCase() == 'yes') {
+        if (lillahBoardingAdmittedStudents.length == numberOfLillahBoardingEligibleStudents) {
+          break;
+        }
+        lillahBoardingAdmittedStudents.add(allStudents[i]);
+        homeController.students.remove(allStudents[i]);
+      }
+    }
+    for (int i = 0; i < lillahBoardingAdmittedStudents.length; i++) {
+      allStudents.remove(lillahBoardingAdmittedStudents[i]);
+    }
+    lillahBoardingAdmittedStudents.sort((a, b) => a.roll!.compareTo(b.roll!));
+  }
+
+  void drawDisabilityEligibleStudents({
+    required int numberOfStudentsToBeAdmitted,
+    required int percentageOfDisabilityQuota,
+  }) {
+    disabilityAdmittedStudents.value.clear();
+    final numberOfDisabilityEligibleStudents = (numberOfStudentsToBeAdmitted * percentageOfDisabilityQuota / 100).round();
+    allStudents.shuffle();
+    for (int i = 0; i < allStudents.length; i++) {
+      if (allStudents[i].isDisablity?.toLowerCase() == 'yes') {
+        if (disabilityAdmittedStudents.length == numberOfDisabilityEligibleStudents) {
+          break;
+        }
+        disabilityAdmittedStudents.add(allStudents[i]);
+        homeController.students.remove(allStudents[i]);
+      }
+    }
+    for (int i = 0; i < disabilityAdmittedStudents.length; i++) {
+      allStudents.remove(disabilityAdmittedStudents[i]);
+    }
+    disabilityAdmittedStudents.sort((a, b) => a.roll!.compareTo(b.roll!));
+  }
+
   void drawGeneralStudents({
     required int numberOfStudentsToBeAdmitted,
     required int generalQuotaStudents,
@@ -152,6 +221,8 @@ class DrawController extends GetxController {
     generalAdmittedStudents.sort((a, b) => a.roll!.compareTo(b.roll!));
     allStudents.sort((a, b) => a.sl!.compareTo(b.sl!));
   }
+
+  final now = DateTime.now().millisecondsSinceEpoch;
 
   /// This function is used to generate excel file
   void createExcel(BuildContext context) async {
@@ -184,28 +255,28 @@ class DrawController extends GetxController {
     }
     final fileBytes = excel.save();
     final dir = await getApplicationDocumentsDirectory();
-    final filename = '${dir.path}/result_${DateTime.now().millisecondsSinceEpoch}.xlsx';
+    final filename = '${dir.path}/result_$now.xlsx';
     File(filename)
       ..createSync(recursive: true)
       ..writeAsBytesSync(fileBytes!);
 
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Success'),
-          content: Text(filename),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('OK'),
-            ),
-          ],
-        );
-      },
-    );
+    // showDialog(
+    //   context: context,
+    //   builder: (context) {
+    //     return AlertDialog(
+    //       title: const Text('Success'),
+    //       content: Text(filename),
+    //       actions: [
+    //         TextButton(
+    //           onPressed: () {
+    //             Navigator.pop(context);
+    //           },
+    //           child: const Text('OK'),
+    //         ),
+    //       ],
+    //     );
+    //   },
+    // );
   }
 
   /// This function is used to generate pdf file
@@ -228,7 +299,7 @@ class DrawController extends GetxController {
                     pw.Column(
                       children: [
                         pw.Text(
-                          'Freedom Fighter Quota: (${fqAdmittedStudents.length})',
+                          '\nFreedom Fighter Quota: (${fqAdmittedStudents.length})',
                           style: const pw.TextStyle(
                             fontSize: 8,
                           ),
@@ -308,7 +379,7 @@ class DrawController extends GetxController {
 
     final fileBytes = await pdf.save();
     final dir = await getApplicationDocumentsDirectory();
-    final filename = '${dir.path}/result_${DateTime.now().millisecondsSinceEpoch}.pdf';
+    final filename = '${dir.path}/result_$now.pdf';
     File(filename)
       ..createSync(recursive: true)
       ..writeAsBytesSync(fileBytes);

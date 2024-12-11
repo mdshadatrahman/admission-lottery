@@ -175,6 +175,93 @@ class _RestulViewState extends State<ResultView> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
+                          'Twin Quota:(${drawcontroller.twinAdmittedStudents.length})',
+                          style: TextStyle(
+                            fontSize: 20.sp,
+                          ),
+                        ),
+                        SizedBox(height: 10.h),
+                        Column(
+                          children: [
+                            for (int i = 0; i < drawcontroller.twinAdmittedStudents.length; i++)
+                              Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: Text(
+                                  drawcontroller.twinAdmittedStudents[i].roll.toString(),
+                                  style: TextStyle(
+                                    fontSize: 20.sp,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(width: 50.w),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Lillah Boarding Quota:(${drawcontroller.lillahBoardingAdmittedStudents.length})',
+                          style: TextStyle(
+                            fontSize: 20.sp,
+                          ),
+                        ),
+                        SizedBox(height: 10.h),
+                        Column(
+                          children: [
+                            for (int i = 0; i < drawcontroller.lillahBoardingAdmittedStudents.length; i++)
+                              Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: Text(
+                                  drawcontroller.lillahBoardingAdmittedStudents[i].roll.toString(),
+                                  style: TextStyle(
+                                    fontSize: 20.sp,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(width: 50.w),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Disability Quota:(${drawcontroller.disabilityAdmittedStudents.length})',
+                          style: TextStyle(
+                            fontSize: 20.sp,
+                          ),
+                        ),
+                        SizedBox(height: 10.h),
+                        Column(
+                          children: [
+                            for (int i = 0; i < drawcontroller.disabilityAdmittedStudents.length; i++)
+                              Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: Text(
+                                  drawcontroller.disabilityAdmittedStudents[i].roll.toString(),
+                                  style: TextStyle(
+                                    fontSize: 20.sp,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(width: 50.w),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
                           'General Quota: (${drawcontroller.generalAdmittedStudents.length})',
                           style: TextStyle(
                             fontSize: 20.sp,

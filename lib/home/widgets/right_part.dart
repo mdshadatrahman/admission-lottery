@@ -23,143 +23,249 @@ class RightPart extends StatelessWidget {
                 color: AppColors.primary,
               ),
             )
-          : Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  color: AppColors.tertiary,
-                  child: Row(
+          : SingleChildScrollView(
+              child: Table(
+                border: TableBorder.all(color: AppColors.tertiary),
+                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                defaultColumnWidth: const IntrinsicColumnWidth(),
+                children: [
+                  TableRow(
+                    decoration: BoxDecoration(
+                      color: AppColors.tertiary,
+                    ),
                     children: [
-                      SizedBox(
-                        width: 50.w,
-                        child: Text(
-                          'SL',
-                          style: titleStyle(),
+                      const TableCell(
+                        child: Center(
+                          child: Text(
+                            'SL',
+                            style: TextStyle(
+                              color: AppColors.onPrimary,
+                              fontSize: 20,
+                            ),
+                          ),
                         ),
                       ),
-                      const SizedBox(width: 20),
-                      SizedBox(
-                        width: 150.w,
-                        child: Text(
-                          'Roll',
-                          style: titleStyle(),
+                      const TableCell(
+                        child: Center(
+                          child: Text(
+                            'Roll',
+                            style: TextStyle(
+                              color: AppColors.onPrimary,
+                              fontSize: 20,
+                            ),
+                          ),
                         ),
                       ),
-                      const SizedBox(width: 20),
-                      SizedBox(
-                        width: 100.w,
-                        child: Text(
-                          'Quota',
-                          style: titleStyle(),
+                      const TableCell(
+                        child: Center(
+                          child: Text(
+                            'FQ',
+                            style: TextStyle(
+                              color: AppColors.onPrimary,
+                              fontSize: 20,
+                            ),
+                          ),
                         ),
                       ),
-                      // const SizedBox(width: 20),
-                      // SizedBox(
-                      //   width: 50.w,
-                      //   child: Text(
-                      //     'EQ',
-                      //     style: titleStyle(),
-                      //   ),
-                      // ),
-                      const SizedBox(width: 20),
-                      SizedBox(
-                        width: 70.w,
-                        child: Text(
-                          'CAQ',
-                          style: titleStyle(),
+                      const TableCell(
+                        child: Center(
+                          child: Text(
+                            'EQ',
+                            style: TextStyle(
+                              color: AppColors.onPrimary,
+                              fontSize: 20,
+                            ),
+                          ),
                         ),
                       ),
-                      const SizedBox(width: 20),
-                      SizedBox(
-                        width: 130.w,
-                        child: Text(
-                          'Sibling',
-                          style: titleStyle(),
+                      const TableCell(
+                        child: Center(
+                          child: Text(
+                            'CAQ',
+                            style: TextStyle(
+                              color: AppColors.onPrimary,
+                              fontSize: 20,
+                            ),
+                          ),
                         ),
                       ),
-                      const SizedBox(width: 20),
-                      SizedBox(
-                        width: 130.w,
-                        child: Text(
-                          'General',
-                          style: titleStyle(),
+                      const TableCell(
+                        child: Center(
+                          child: Text(
+                            'Sibling',
+                            style: TextStyle(
+                              color: AppColors.onPrimary,
+                              fontSize: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const TableCell(
+                        child: Center(
+                          child: Text(
+                            'Twin',
+                            style: TextStyle(
+                              color: AppColors.onPrimary,
+                              fontSize: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const TableCell(
+                        child: Center(
+                          child: Text(
+                            'Liilah Boarding',
+                            style: TextStyle(
+                              color: AppColors.onPrimary,
+                              fontSize: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const TableCell(
+                        child: Center(
+                          child: Text(
+                            'Disablity',
+                            style: TextStyle(
+                              color: AppColors.onPrimary,
+                              fontSize: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const TableCell(
+                        child: Center(
+                          child: Text(
+                            'General',
+                            style: TextStyle(
+                              color: AppColors.onPrimary,
+                              fontSize: 20,
+                            ),
+                          ),
                         ),
                       ),
                     ],
                   ),
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: students.length,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                        color: index % 2 == 0 ? AppColors.background : AppColors.outlineVariant,
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              width: 50.w,
-                              child: Text(
-                                students[index].sl.toString(),
-                                style: bodyStyle(index),
+                  for (var student in students)
+                    TableRow(
+                      decoration: BoxDecoration(
+                        color: students.indexOf(student) % 2 == 0 ? AppColors.background : AppColors.outlineVariant,
+                      ),
+                      children: [
+                        TableCell(
+                          child: Center(
+                            child: Text(
+                              student.sl.toString(),
+                              style: TextStyle(
+                                color: AppColors.onBackground,
+                                fontSize: 20,
                               ),
                             ),
-                            const SizedBox(width: 20),
-                            SizedBox(
-                              width: 150.w,
-                              child: Text(
-                                students[index].roll.toString(),
-                                style: bodyStyle(index),
-                              ),
-                            ),
-                            const SizedBox(width: 20),
-                            SizedBox(
-                              width: 100.w,
-                              child: Text(
-                                students[index].isFqOrEq.toString(),
-                                style: bodyStyle(index),
-                              ),
-                            ),
-                            // const SizedBox(width: 20),
-                            // SizedBox(
-                            //   width: 50.w,
-                            //   child: Text(
-                            //     students[index].isEq.toString(),
-                            //     style: bodyStyle(index),
-                            //   ),
-                            // ),
-                            const SizedBox(width: 20),
-                            SizedBox(
-                              width: 70.w,
-                              child: Text(
-                                students[index].isCaq.toString(),
-                                style: bodyStyle(index),
-                              ),
-                            ),
-                            const SizedBox(width: 20),
-                            SizedBox(
-                              width: 130.w,
-                              child: Text(
-                                students[index].isSibling.toString(),
-                                style: bodyStyle(index),
-                              ),
-                            ),
-                            const SizedBox(width: 20),
-                            SizedBox(
-                              width: 130.w,
-                              child: Text(
-                                students[index].isGeneral.toString(),
-                                style: bodyStyle(index),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
-                      );
-                    },
-                  ),
-                ),
-              ],
+                        TableCell(
+                          child: Center(
+                            child: Text(
+                              student.roll.toString(),
+                              style: TextStyle(
+                                color: AppColors.onBackground,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ),
+                        TableCell(
+                          child: Center(
+                            child: Text(
+                              student.isFq.toString(),
+                              style: TextStyle(
+                                color: AppColors.onBackground,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ),
+                        TableCell(
+                          child: Center(
+                            child: Text(
+                              student.isEq.toString(),
+                              style: TextStyle(
+                                color: AppColors.onBackground,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ),
+                        TableCell(
+                          child: Center(
+                            child: Text(
+                              student.isCaq.toString(),
+                              style: TextStyle(
+                                color: AppColors.onBackground,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ),
+                        TableCell(
+                          child: Center(
+                            child: Text(
+                              student.isSibling.toString(),
+                              style: TextStyle(
+                                color: AppColors.onBackground,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ),
+                        TableCell(
+                          child: Center(
+                            child: Text(
+                              student.isTwin.toString(),
+                              style: TextStyle(
+                                color: AppColors.onBackground,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ),
+                        TableCell(
+                          child: Center(
+                            child: Text(
+                              student.isLillahBoarding.toString(),
+                              style: TextStyle(
+                                color: AppColors.onBackground,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ),
+                        TableCell(
+                          child: Center(
+                            child: Text(
+                              student.isDisablity.toString(),
+                              style: TextStyle(
+                                color: AppColors.onBackground,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ),
+                        TableCell(
+                          child: Center(
+                            child: Text(
+                              student.isGeneral.toString(),
+                              style: TextStyle(
+                                color: AppColors.onBackground,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                ],
+              ),
             ),
     );
   }
