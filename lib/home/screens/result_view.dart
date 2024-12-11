@@ -1,6 +1,7 @@
 import 'package:admission_lottery/home/controllers/draw_controller.dart';
 import 'package:admission_lottery/main.dart';
 import 'package:admission_lottery/utils/app_colors.dart';
+import 'package:cross_scroll/cross_scroll.dart';
 import 'package:fluent_ui/fluent_ui.dart' as f;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,10 +24,16 @@ class _RestulViewState extends State<ResultView> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: AppColors.primary,
-        title: const Text('Result'),
+        title: const Text(
+          'Result',
+          style: TextStyle(
+            fontSize: 20,
+            color: Colors.white,
+          ),
+        ),
         centerTitle: false,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
             Navigator.of(context).pop();
             drawcontroller.dispose();
@@ -47,7 +54,7 @@ class _RestulViewState extends State<ResultView> {
         child: SizedBox(
           height: height,
           width: width,
-          child: SingleChildScrollView(
+          child: CrossScroll(
             child: Column(
               children: [
                 Row(

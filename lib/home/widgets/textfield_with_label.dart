@@ -18,16 +18,18 @@ class TextFieldWithLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 16.sp,
-            fontWeight: FontWeight.bold,
-            color: AppColors.onTertiaryContainer,
+        Expanded(
+          child: Text(
+            label,
+            style: TextStyle(
+              fontSize: 16.sp,
+              color: AppColors.onTertiaryContainer,
+            ),
           ),
         ),
         const SizedBox(width: 10),
-        Expanded(
+        SizedBox(
+          width: 100.w,
           child: TextFormField(
             controller: controller,
             validator: validator,
@@ -35,13 +37,25 @@ class TextFieldWithLabel extends StatelessWidget {
               FilteringTextInputFormatter.digitsOnly,
             ],
             decoration: InputDecoration(
+              fillColor: AppColors.secondaryContainer,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
                 borderSide: const BorderSide(
-                  color: AppColors.onTertiaryContainer,
+                  color: AppColors.primary,
                 ),
               ),
-              fillColor: AppColors.secondaryContainer,
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5),
+                borderSide: BorderSide(
+                  color: AppColors.primary.withOpacity(0.5),
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5),
+                borderSide: const BorderSide(
+                  color: AppColors.primary,
+                ),
+              ),
             ),
           ),
         ),

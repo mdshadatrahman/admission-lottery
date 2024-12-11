@@ -77,7 +77,6 @@ class _LeftPartState extends State<LeftPart> {
                     'Class:',
                     style: TextStyle(
                       fontSize: 20.sp,
-                      fontWeight: FontWeight.bold,
                       color: AppColors.onTertiaryContainer,
                     ),
                   ),
@@ -89,15 +88,15 @@ class _LeftPartState extends State<LeftPart> {
                       items: [
                         DropdownMenuItem(
                           value: 3,
-                          child: Text('3', style: TextStyle(fontSize: 20.sp)),
+                          child: Text('3', style: TextStyle(fontSize: 16.sp)),
                         ),
                         DropdownMenuItem(
                           value: 6,
-                          child: Text('6', style: TextStyle(fontSize: 20.sp)),
+                          child: Text('6', style: TextStyle(fontSize: 16.sp)),
                         ),
                         DropdownMenuItem(
                           value: 9,
-                          child: Text('9', style: TextStyle(fontSize: 20.sp)),
+                          child: Text('9', style: TextStyle(fontSize: 16.sp)),
                         ),
                       ],
                       onChanged: (v) {
@@ -114,7 +113,6 @@ class _LeftPartState extends State<LeftPart> {
                     'Version:',
                     style: TextStyle(
                       fontSize: 20.sp,
-                      fontWeight: FontWeight.bold,
                       color: AppColors.onTertiaryContainer,
                     ),
                   ),
@@ -126,11 +124,11 @@ class _LeftPartState extends State<LeftPart> {
                       items: [
                         DropdownMenuItem(
                           value: 'English',
-                          child: Text('English', style: TextStyle(fontSize: 20.sp)),
+                          child: Text('English', style: TextStyle(fontSize: 16.sp)),
                         ),
                         DropdownMenuItem(
                           value: 'Bangla',
-                          child: Text('Bangla', style: TextStyle(fontSize: 20.sp)),
+                          child: Text('Bangla', style: TextStyle(fontSize: 16.sp)),
                         ),
                       ],
                       onChanged: (v) {
@@ -147,7 +145,6 @@ class _LeftPartState extends State<LeftPart> {
                     'Shift:',
                     style: TextStyle(
                       fontSize: 20.sp,
-                      fontWeight: FontWeight.bold,
                       color: AppColors.onTertiaryContainer,
                     ),
                   ),
@@ -159,11 +156,11 @@ class _LeftPartState extends State<LeftPart> {
                       items: [
                         DropdownMenuItem(
                           value: 'Morning',
-                          child: Text('Morning', style: TextStyle(fontSize: 20.sp)),
+                          child: Text('Morning', style: TextStyle(fontSize: 16.sp)),
                         ),
                         DropdownMenuItem(
                           value: 'Day',
-                          child: Text('Day', style: TextStyle(fontSize: 20.sp)),
+                          child: Text('Day', style: TextStyle(fontSize: 16.sp)),
                         ),
                       ],
                       onChanged: (v) {
@@ -180,7 +177,6 @@ class _LeftPartState extends State<LeftPart> {
                     'Resident Status:',
                     style: TextStyle(
                       fontSize: 20.sp,
-                      fontWeight: FontWeight.bold,
                       color: AppColors.onTertiaryContainer,
                     ),
                   ),
@@ -192,11 +188,11 @@ class _LeftPartState extends State<LeftPart> {
                       items: [
                         DropdownMenuItem(
                           value: 'Mandatory Resident',
-                          child: Text('Mandatory Resident', style: TextStyle(fontSize: 20.sp)),
+                          child: Text('Mandatory Resident', style: TextStyle(fontSize: 16.sp)),
                         ),
                         DropdownMenuItem(
                           value: 'Non-resident',
-                          child: Text('Non-resident', style: TextStyle(fontSize: 20.sp)),
+                          child: Text('Non-resident', style: TextStyle(fontSize: 16.sp)),
                         ),
                       ],
                       onChanged: (v) {
