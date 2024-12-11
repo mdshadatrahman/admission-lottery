@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "admission_lottery" "\0"
+            VALUE "CompanyName", "com.shadat" "\0"
+            VALUE "FileDescription", "DRMC Admission System" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "admission_lottery" "\0"
+            VALUE "InternalName", "DRMC Admission System" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2023 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "admission_lottery.exe" "\0"
-            VALUE "ProductName", "admission_lottery" "\0"
+            VALUE "OriginalFilename", "drmc_admission_system.exe" "\0"
+            VALUE "ProductName", "DRMC Admission System" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

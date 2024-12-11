@@ -21,7 +21,8 @@ class MyApp extends StatelessWidget {
       builder: (_, child) {
         return FluentApp(
           debugShowCheckedModeBanner: false,
-          title: 'Admission Lottery',
+          title: 'DRMC Admission System',
+          
           themeMode: ThemeMode.light,
           theme: FluentThemeData(
             brightness: Brightness.light,
