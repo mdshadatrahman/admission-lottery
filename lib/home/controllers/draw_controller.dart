@@ -1,5 +1,3 @@
-// ignore_for_file: invalid_use_of_protected_member, use_build_context_synchronously
-
 import 'dart:io';
 
 import 'package:admission_lottery/home/controllers/home_controller.dart';
@@ -15,12 +13,12 @@ class DrawController extends GetxController {
   final homeController = Get.put(HomeController());
 
   void clearAll() {
-    fqAdmittedStudents.value.clear();
-    eqAdmittedStudents.value.clear();
-    caqAdmittedStudents.value.clear();
-    siblingAdmittedStudents.value.clear();
-    generalAdmittedStudents.value.clear();
-    allStudents.value.clear();
+    fqAdmittedStudents.clear();
+    eqAdmittedStudents.clear();
+    caqAdmittedStudents.clear();
+    siblingAdmittedStudents.clear();
+    generalAdmittedStudents.clear();
+    allStudents.clear();
   }
 
   @override
@@ -49,31 +47,31 @@ class DrawController extends GetxController {
     required int numberOfStudentsToBeAdmitted,
     required int percentageOfFqQuota,
   }) {
-    allStudents.addAll(homeController.students.value);
-    int numberOfFqEligibleStudents = (numberOfStudentsToBeAdmitted * percentageOfFqQuota / 100).round(); // 3.0 -> 3,  3.25 -> 3, 3.5 -> 4, 3.75 -> 4, -3.5 -> -4
-    fqAdmittedStudents.value.clear(); // clear the list
-    allStudents.shuffle(); // Randomize the list
+    allStudents.addAll(homeController.students);
+    int numberOfFqEligibleStudents = (numberOfStudentsToBeAdmitted * percentageOfFqQuota / 100).round();
+    fqAdmittedStudents.clear();
+    allStudents.shuffle();
     for (int i = 0; i < allStudents.length; i++) {
       if (allStudents[i].isFq?.toLowerCase() == 'yes') {
         if (fqAdmittedStudents.length == numberOfFqEligibleStudents) {
-          break; // break the loop
+          break;
         }
-        fqAdmittedStudents.add(allStudents[i]); // add the student to the list
-        homeController.students.remove(allStudents[i]); // remove the student from the main list
+        fqAdmittedStudents.add(allStudents[i]);
+        homeController.students.remove(allStudents[i]);
       }
     }
     for (int i = 0; i < fqAdmittedStudents.length; i++) {
-      allStudents.remove(fqAdmittedStudents[i]); // remove the student from the all students list
+      allStudents.remove(fqAdmittedStudents[i]);
     }
 
-    fqAdmittedStudents.sort((a, b) => a.roll!.compareTo(b.roll!)); // sort the list
+    fqAdmittedStudents.sort((a, b) => a.roll!.compareTo(b.roll!));
   }
 
   void drawEqEligibleStudents({
     required int numberOfStudentsToBeAdmitted,
     required int percentageOfEqQuota,
   }) {
-    eqAdmittedStudents.value.clear();
+    eqAdmittedStudents.clear();
     final numberOfEqEligibleStudents = (numberOfStudentsToBeAdmitted * percentageOfEqQuota / 100).round();
     allStudents.shuffle();
     for (int i = 0; i < allStudents.length; i++) {
@@ -95,7 +93,7 @@ class DrawController extends GetxController {
     required int numberOfStudentsToBeAdmitted,
     required int percentageOfCaqQuota,
   }) {
-    caqAdmittedStudents.value.clear();
+    caqAdmittedStudents.clear();
     final numberOfCaqEligibleStudents = (numberOfStudentsToBeAdmitted * percentageOfCaqQuota / 100).round();
     allStudents.shuffle();
     for (int i = 0; i < allStudents.length; i++) {
@@ -117,7 +115,7 @@ class DrawController extends GetxController {
     required int numberOfStudentsToBeAdmitted,
     required int percentageOfSiblingQuota,
   }) {
-    siblingAdmittedStudents.value.clear();
+    siblingAdmittedStudents.clear();
     final numberOfSiblingEligibleStudents = (numberOfStudentsToBeAdmitted * percentageOfSiblingQuota / 100).round();
     allStudents.shuffle();
     for (int i = 0; i < allStudents.length; i++) {
@@ -139,7 +137,7 @@ class DrawController extends GetxController {
     required int numberOfStudentsToBeAdmitted,
     required int percentageOfTwinQuota,
   }) {
-    twinAdmittedStudents.value.clear();
+    twinAdmittedStudents.clear();
     final numberOfTwinEligibleStudents = (numberOfStudentsToBeAdmitted * percentageOfTwinQuota / 100).round();
     allStudents.shuffle();
     for (int i = 0; i < allStudents.length; i++) {
@@ -161,7 +159,7 @@ class DrawController extends GetxController {
     required int numberOfStudentsToBeAdmitted,
     required int percentageOfLillahBoardingQuota,
   }) {
-    lillahBoardingAdmittedStudents.value.clear();
+    lillahBoardingAdmittedStudents.clear();
     final numberOfLillahBoardingEligibleStudents = (numberOfStudentsToBeAdmitted * percentageOfLillahBoardingQuota / 100).round();
     allStudents.shuffle();
     for (int i = 0; i < allStudents.length; i++) {
@@ -183,7 +181,7 @@ class DrawController extends GetxController {
     required int numberOfStudentsToBeAdmitted,
     required int percentageOfDisabilityQuota,
   }) {
-    disabilityAdmittedStudents.value.clear();
+    disabilityAdmittedStudents.clear();
     final numberOfDisabilityEligibleStudents = (numberOfStudentsToBeAdmitted * percentageOfDisabilityQuota / 100).round();
     allStudents.shuffle();
     for (int i = 0; i < allStudents.length; i++) {
@@ -205,7 +203,7 @@ class DrawController extends GetxController {
     required int numberOfStudentsToBeAdmitted,
     required int generalQuotaStudents,
   }) {
-    generalAdmittedStudents.value.clear();
+    generalAdmittedStudents.clear();
     allStudents.shuffle();
 
     for (int i = 0; i < allStudents.length; i++) {
@@ -222,10 +220,11 @@ class DrawController extends GetxController {
     allStudents.sort((a, b) => a.sl!.compareTo(b.sl!));
   }
 
-  final now = DateTime.now().millisecondsSinceEpoch;
+  int now = DateTime.now().millisecondsSinceEpoch;
 
-  /// This function is used to generate excel file
   void createExcel(BuildContext context) async {
+    now = DateTime.now().millisecondsSinceEpoch;
+
     final excel = Excel.createExcel();
     Sheet sheetObject = excel['Sheet1'];
 
@@ -259,29 +258,24 @@ class DrawController extends GetxController {
     File(filename)
       ..createSync(recursive: true)
       ..writeAsBytesSync(fileBytes!);
-
-    // showDialog(
-    //   context: context,
-    //   builder: (context) {
-    //     return AlertDialog(
-    //       title: const Text('Success'),
-    //       content: Text(filename),
-    //       actions: [
-    //         TextButton(
-    //           onPressed: () {
-    //             Navigator.pop(context);
-    //           },
-    //           child: const Text('OK'),
-    //         ),
-    //       ],
-    //     );
-    //   },
-    // );
   }
 
-  /// This function is used to generate pdf file
+  final image = pw.MemoryImage(
+    File('assets/header.jpeg').readAsBytesSync(),
+  );
+
   Future<void> generatePdf(BuildContext context) async {
     final pdf = pw.Document();
+
+    final headerStyle = pw.TextStyle(
+      fontSize: 6,
+      fontWeight: pw.FontWeight.bold,
+    );
+
+    final bodyStyle = const pw.TextStyle(
+      fontSize: 7,
+    );
+
     pdf.addPage(
       pw.Page(
         pageFormat: PdfPageFormat.a4,
@@ -290,87 +284,100 @@ class DrawController extends GetxController {
         build: (pw.Context context) {
           return pw.Column(
             children: [
-              pw.SizedBox(height: 120),
-              pw.Expanded(
-                child: pw.Row(
-                  crossAxisAlignment: pw.CrossAxisAlignment.start,
-                  mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                  children: [
-                    pw.Column(
-                      children: [
-                        pw.Text(
-                          '\nFreedom Fighter Quota: (${fqAdmittedStudents.length})',
-                          style: const pw.TextStyle(
-                            fontSize: 8,
-                          ),
-                        ),
-                        pw.SizedBox(height: 10),
-                        for (int i = 0; i < fqAdmittedStudents.length; i++)
-                          pw.Text(
-                            fqAdmittedStudents[i].roll!,
-                            style: const pw.TextStyle(fontSize: 8),
-                          ),
-                      ],
-                    ),
-                    pw.Column(
-                      children: [
-                        pw.Text(
-                          '\nEducation Quota:(${eqAdmittedStudents.length})',
-                          style: const pw.TextStyle(fontSize: 8),
-                        ),
-                        pw.SizedBox(height: 10),
-                        for (int i = 0; i < eqAdmittedStudents.length; i++)
-                          pw.Text(
-                            eqAdmittedStudents[i].roll!,
-                            style: const pw.TextStyle(fontSize: 8),
-                          ),
-                      ],
-                    ),
-                    pw.Column(
-                      children: [
-                        pw.Text(
-                          '\nCatchment Area Quota:(${caqAdmittedStudents.length})',
-                          style: const pw.TextStyle(fontSize: 8),
-                        ),
-                        pw.SizedBox(height: 10),
-                        for (int i = 0; i < caqAdmittedStudents.length; i++)
-                          pw.Text(
-                            caqAdmittedStudents[i].roll!,
-                            style: const pw.TextStyle(fontSize: 8),
-                          ),
-                      ],
-                    ),
-                    pw.Column(
-                      children: [
-                        pw.Text(
-                          '\nSibling Quota:(${siblingAdmittedStudents.length})',
-                          style: const pw.TextStyle(fontSize: 8),
-                        ),
-                        pw.SizedBox(height: 10),
-                        for (int i = 0; i < siblingAdmittedStudents.length; i++)
-                          pw.Text(
-                            siblingAdmittedStudents[i].roll!,
-                            style: const pw.TextStyle(fontSize: 8),
-                          ),
-                      ],
-                    ),
-                    pw.Column(
-                      children: [
-                        pw.Text(
-                          '\nGeneral Quota: (${generalAdmittedStudents.length})',
-                          style: const pw.TextStyle(fontSize: 8),
-                        ),
-                        pw.SizedBox(height: 10),
-                        for (int i = 0; i < generalAdmittedStudents.length; i++)
-                          pw.Text(
-                            generalAdmittedStudents[i].roll!,
-                            style: const pw.TextStyle(fontSize: 8),
-                          ),
-                      ],
-                    ),
-                  ],
-                ),
-              )
+              pw.Center(child: pw.Image(image)),
+              pw.SizedBox(height: 10),
+              pw.Table(
+                children: [
+                  pw.TableRow(
+                    children: [
+                      pw.Text('Freedom Fighter Quota: (${fqAdmittedStudents.length})', style: headerStyle),
+                      pw.Text('Education Quota:(${eqAdmittedStudents.length})', style: headerStyle),
+                      pw.Text('Catchment Area Quota:(${caqAdmittedStudents.length})', style: headerStyle),
+                      pw.Text('Sibling Quota:(${siblingAdmittedStudents.length})', style: headerStyle),
+                      pw.Text('Twin Quota:(${twinAdmittedStudents.length})', style: headerStyle),
+                      pw.Text('Lillah Boarding Quota:(${lillahBoardingAdmittedStudents.length})', style: headerStyle),
+                      pw.Text('Disability Quota:(${disabilityAdmittedStudents.length})', style: headerStyle),
+                      pw.Text('General Quota: (${generalAdmittedStudents.length})', style: headerStyle),
+                    ],
+                  ),
+                  pw.TableRow(
+                    children: [
+                      pw.Column(
+                        children: [
+                          for (int i = 0; i < fqAdmittedStudents.length; i++)
+                            pw.Text(
+                              fqAdmittedStudents[i].roll!,
+                              style: bodyStyle,
+                            ),
+                        ],
+                      ),
+                      pw.Column(
+                        children: [
+                          for (int i = 0; i < eqAdmittedStudents.length; i++)
+                            pw.Text(
+                              eqAdmittedStudents[i].roll!,
+                              style: bodyStyle,
+                            ),
+                        ],
+                      ),
+                      pw.Column(
+                        children: [
+                          for (int i = 0; i < caqAdmittedStudents.length; i++)
+                            pw.Text(
+                              caqAdmittedStudents[i].roll!,
+                              style: bodyStyle,
+                            ),
+                        ],
+                      ),
+                      pw.Column(
+                        children: [
+                          for (int i = 0; i < siblingAdmittedStudents.length; i++)
+                            pw.Text(
+                              siblingAdmittedStudents[i].roll!,
+                              style: bodyStyle,
+                            ),
+                        ],
+                      ),
+                      pw.Column(
+                        children: [
+                          for (int i = 0; i < twinAdmittedStudents.length; i++)
+                            pw.Text(
+                              twinAdmittedStudents[i].roll!,
+                              style: bodyStyle,
+                            ),
+                        ],
+                      ),
+                      pw.Column(
+                        children: [
+                          for (int i = 0; i < lillahBoardingAdmittedStudents.length; i++)
+                            pw.Text(
+                              lillahBoardingAdmittedStudents[i].roll!,
+                              style: bodyStyle,
+                            ),
+                        ],
+                      ),
+                      pw.Column(
+                        children: [
+                          for (int i = 0; i < disabilityAdmittedStudents.length; i++)
+                            pw.Text(
+                              disabilityAdmittedStudents[i].roll!,
+                              style: bodyStyle,
+                            ),
+                        ],
+                      ),
+                      pw.Column(
+                        children: [
+                          for (int i = 0; i < generalAdmittedStudents.length; i++)
+                            pw.Text(
+                              generalAdmittedStudents[i].roll!,
+                              style: bodyStyle,
+                            ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ],
           );
         },
@@ -383,8 +390,7 @@ class DrawController extends GetxController {
     File(filename)
       ..createSync(recursive: true)
       ..writeAsBytesSync(fileBytes);
-    // final file = File('example.pdf');
-    // await file.writeAsBytes(await pdf.save());
+
     showDialog(
       context: context,
       builder: (context) {
