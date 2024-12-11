@@ -264,17 +264,42 @@ class DrawController extends GetxController {
     File('assets/header.jpeg').readAsBytesSync(),
   );
 
+  final headerStyle = pw.TextStyle(
+    fontSize: 6,
+    fontWeight: pw.FontWeight.bold,
+  );
+
+  pw.Widget headerWidget(String text) {
+    return pw.Center(
+      child: pw.Padding(
+        padding: const pw.EdgeInsets.all(2),
+        child: pw.Text(
+          text,
+          style: headerStyle,
+        ),
+      ),
+    );
+  }
+
+  pw.Widget bodyWidget(List<Student> students) {
+    return pw.Padding(
+      padding: const pw.EdgeInsets.symmetric(vertical: 3),
+      child: pw.Column(
+        children: [
+          for (int i = 0; i < students.length; i++)
+            pw.Text(
+              students[i].roll!,
+              style: const pw.TextStyle(
+                fontSize: 8,
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
   Future<void> generatePdf(BuildContext context) async {
     final pdf = pw.Document();
-
-    final headerStyle = pw.TextStyle(
-      fontSize: 6,
-      fontWeight: pw.FontWeight.bold,
-    );
-
-    final bodyStyle = const pw.TextStyle(
-      fontSize: 7,
-    );
 
     pdf.addPage(
       pw.Page(
@@ -287,93 +312,33 @@ class DrawController extends GetxController {
               pw.Center(child: pw.Image(image)),
               pw.SizedBox(height: 10),
               pw.Table(
+                border: pw.TableBorder.all(),
+                defaultVerticalAlignment: pw.TableCellVerticalAlignment.middle,
+                defaultColumnWidth: const pw.IntrinsicColumnWidth(),
                 children: [
                   pw.TableRow(
                     children: [
-                      pw.Text('Freedom Fighter Quota: (${fqAdmittedStudents.length})', style: headerStyle),
-                      pw.Text('Education Quota:(${eqAdmittedStudents.length})', style: headerStyle),
-                      pw.Text('Catchment Area Quota:(${caqAdmittedStudents.length})', style: headerStyle),
-                      pw.Text('Sibling Quota:(${siblingAdmittedStudents.length})', style: headerStyle),
-                      pw.Text('Twin Quota:(${twinAdmittedStudents.length})', style: headerStyle),
-                      pw.Text('Lillah Boarding Quota:(${lillahBoardingAdmittedStudents.length})', style: headerStyle),
-                      pw.Text('Disability Quota:(${disabilityAdmittedStudents.length})', style: headerStyle),
-                      pw.Text('General Quota: (${generalAdmittedStudents.length})', style: headerStyle),
+                      headerWidget('Freedom Fighter Quota: (${fqAdmittedStudents.length})'),
+                      headerWidget('Education Quota:(${eqAdmittedStudents.length})'),
+                      headerWidget('Catchment Area Quota:(${caqAdmittedStudents.length})'),
+                      headerWidget('Sibling Quota:(${siblingAdmittedStudents.length})'),
+                      headerWidget('Twin Quota:(${twinAdmittedStudents.length})'),
+                      headerWidget('Lillah Boarding Quota:(${lillahBoardingAdmittedStudents.length})'),
+                      headerWidget('Disability Quota:(${disabilityAdmittedStudents.length})'),
+                      headerWidget('General Quota: (${generalAdmittedStudents.length})'),
                     ],
                   ),
                   pw.TableRow(
+                    verticalAlignment: pw.TableCellVerticalAlignment.top,
                     children: [
-                      pw.Column(
-                        children: [
-                          for (int i = 0; i < fqAdmittedStudents.length; i++)
-                            pw.Text(
-                              fqAdmittedStudents[i].roll!,
-                              style: bodyStyle,
-                            ),
-                        ],
-                      ),
-                      pw.Column(
-                        children: [
-                          for (int i = 0; i < eqAdmittedStudents.length; i++)
-                            pw.Text(
-                              eqAdmittedStudents[i].roll!,
-                              style: bodyStyle,
-                            ),
-                        ],
-                      ),
-                      pw.Column(
-                        children: [
-                          for (int i = 0; i < caqAdmittedStudents.length; i++)
-                            pw.Text(
-                              caqAdmittedStudents[i].roll!,
-                              style: bodyStyle,
-                            ),
-                        ],
-                      ),
-                      pw.Column(
-                        children: [
-                          for (int i = 0; i < siblingAdmittedStudents.length; i++)
-                            pw.Text(
-                              siblingAdmittedStudents[i].roll!,
-                              style: bodyStyle,
-                            ),
-                        ],
-                      ),
-                      pw.Column(
-                        children: [
-                          for (int i = 0; i < twinAdmittedStudents.length; i++)
-                            pw.Text(
-                              twinAdmittedStudents[i].roll!,
-                              style: bodyStyle,
-                            ),
-                        ],
-                      ),
-                      pw.Column(
-                        children: [
-                          for (int i = 0; i < lillahBoardingAdmittedStudents.length; i++)
-                            pw.Text(
-                              lillahBoardingAdmittedStudents[i].roll!,
-                              style: bodyStyle,
-                            ),
-                        ],
-                      ),
-                      pw.Column(
-                        children: [
-                          for (int i = 0; i < disabilityAdmittedStudents.length; i++)
-                            pw.Text(
-                              disabilityAdmittedStudents[i].roll!,
-                              style: bodyStyle,
-                            ),
-                        ],
-                      ),
-                      pw.Column(
-                        children: [
-                          for (int i = 0; i < generalAdmittedStudents.length; i++)
-                            pw.Text(
-                              generalAdmittedStudents[i].roll!,
-                              style: bodyStyle,
-                            ),
-                        ],
-                      ),
+                      bodyWidget(fqAdmittedStudents),
+                      bodyWidget(eqAdmittedStudents),
+                      bodyWidget(caqAdmittedStudents),
+                      bodyWidget(siblingAdmittedStudents),
+                      bodyWidget(twinAdmittedStudents),
+                      bodyWidget(lillahBoardingAdmittedStudents),
+                      bodyWidget(disabilityAdmittedStudents),
+                      bodyWidget(generalAdmittedStudents),
                     ],
                   ),
                 ],
@@ -390,6 +355,8 @@ class DrawController extends GetxController {
     File(filename)
       ..createSync(recursive: true)
       ..writeAsBytesSync(fileBytes);
+
+    if (!context.mounted) return;
 
     showDialog(
       context: context,
