@@ -16,7 +16,8 @@ class Header extends StatefulWidget {
 }
 
 class _HeaderState extends State<Header> {
-  final controller = Get.put(HomeController());
+  final controller = Get.isRegistered<HomeController>() ? Get.find<HomeController>() : Get.put(HomeController());
+
   @override
   Widget build(BuildContext context) {
     return Container(

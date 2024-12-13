@@ -10,7 +10,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 class DrawController extends GetxController {
-  final homeController = Get.put(HomeController());
+  final homeController = Get.isRegistered<HomeController>() ? Get.find<HomeController>() : Get.put(HomeController());
 
   void clearAll() {
     fqAdmittedStudents.clear();

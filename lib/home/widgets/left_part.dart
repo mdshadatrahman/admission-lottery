@@ -22,7 +22,7 @@ class LeftPart extends StatefulWidget {
 }
 
 class _LeftPartState extends State<LeftPart> {
-  final controller = Get.put(HomeController());
+  final controller = Get.isRegistered<HomeController>() ? Get.find<HomeController>() : Get.put(HomeController());
 
   @override
   void initState() {
@@ -57,6 +57,8 @@ class _LeftPartState extends State<LeftPart> {
 
     super.dispose();
   }
+
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -295,15 +297,6 @@ class _LeftPartState extends State<LeftPart> {
                 controller: twinQuotaController,
                 label: 'Twin Quota(%):',
                 validator: (v) {
-                  if (v == null || v.isEmpty) {
-                    return 'Please enter a value';
-                  }
-                  if (int.tryParse(v) == null) {
-                    return 'Please enter a valid number';
-                  }
-                  if (int.parse(v) > 100) {
-                    return 'Please enter a value less than 100';
-                  }
                   return null;
                 },
               ),
@@ -312,15 +305,6 @@ class _LeftPartState extends State<LeftPart> {
                 controller: lillahBoardingQuotaController,
                 label: 'Lillah Boarding Quota(%):',
                 validator: (v) {
-                  if (v == null || v.isEmpty) {
-                    return 'Please enter a value';
-                  }
-                  if (int.tryParse(v) == null) {
-                    return 'Please enter a valid number';
-                  }
-                  if (int.parse(v) > 100) {
-                    return 'Please enter a value less than 100';
-                  }
                   return null;
                 },
               ),
@@ -329,116 +313,127 @@ class _LeftPartState extends State<LeftPart> {
                 controller: disabilityQuotaController,
                 label: 'Disability Quota(%):',
                 validator: (v) {
-                  if (v == null || v.isEmpty) {
-                    return 'Please enter a value';
-                  }
-                  if (int.tryParse(v) == null) {
-                    return 'Please enter a valid number';
-                  }
-                  if (int.parse(v) > 100) {
-                    return 'Please enter a value less than 100';
-                  }
                   return null;
                 },
               ),
               SizedBox(height: 20.h),
-              GestureDetector(
-                onTap: () {
-                  if (!formKey.currentState!.validate()) {
-                    return;
-                  }
-                  controller.filterStudents();
-
-                  final drawController = Get.put(DrawController());
-
-                  final int numberOfStudentsToBeAdmitted = int.tryParse(studentToBeAdmittedController.text) ?? 0;
-                  final int percentageOfFqQuota = freedomFighterQuotaController.text.isEmpty ? 0 : int.tryParse(freedomFighterQuotaController.text) ?? 0;
-                  final int percentageOfEqQuota = educationQuotaController.text.isEmpty ? 0 : int.tryParse(educationQuotaController.text) ?? 0;
-                  final int percentageOfCaqQuota = catchmentAreaQuotaController.text.isEmpty ? 0 : int.tryParse(catchmentAreaQuotaController.text) ?? 0;
-                  final int percentageOfSiblingQuota = siblingQuotaController.text.isEmpty ? 0 : int.tryParse(siblingQuotaController.text) ?? 0;
-                  final int percentageOfTwinQuota = twinQuotaController.text.isEmpty ? 0 : int.tryParse(twinQuotaController.text) ?? 0;
-                  final int percentageOfLillahBoardingQuota = lillahBoardingQuotaController.text.isEmpty ? 0 : int.tryParse(lillahBoardingQuotaController.text) ?? 0;
-                  final int percentageOfDisabilityQuota = disabilityQuotaController.text.isEmpty ? 0 : int.tryParse(disabilityQuotaController.text) ?? 0;
-
-                  drawController.clearAll();
-
-                  drawController.drawFqEligibleStudents(
-                    numberOfStudentsToBeAdmitted: numberOfStudentsToBeAdmitted,
-                    percentageOfFqQuota: percentageOfFqQuota,
-                  );
-
-                  drawController.drawEqEligibleStudents(
-                    numberOfStudentsToBeAdmitted: numberOfStudentsToBeAdmitted,
-                    percentageOfEqQuota: percentageOfEqQuota,
-                  );
-
-                  drawController.drawCaqEligibleStudents(
-                    numberOfStudentsToBeAdmitted: numberOfStudentsToBeAdmitted,
-                    percentageOfCaqQuota: percentageOfCaqQuota,
-                  );
-
-                  drawController.drawSiblingEligibleStudents(
-                    numberOfStudentsToBeAdmitted: numberOfStudentsToBeAdmitted,
-                    percentageOfSiblingQuota: percentageOfSiblingQuota,
-                  );
-
-                  drawController.drawTwinEligibleStudents(
-                    numberOfStudentsToBeAdmitted: numberOfStudentsToBeAdmitted,
-                    percentageOfTwinQuota: percentageOfTwinQuota,
-                  );
-
-                  drawController.drawLillahBoardingEligibleStudents(
-                    numberOfStudentsToBeAdmitted: numberOfStudentsToBeAdmitted,
-                    percentageOfLillahBoardingQuota: percentageOfLillahBoardingQuota,
-                  );
-
-                  drawController.drawDisabilityEligibleStudents(
-                    numberOfStudentsToBeAdmitted: numberOfStudentsToBeAdmitted,
-                    percentageOfDisabilityQuota: percentageOfDisabilityQuota,
-                  );
-
-                  final int generalQuota = numberOfStudentsToBeAdmitted -
-                      drawController.fqAdmittedStudents.length -
-                      drawController.eqAdmittedStudents.length -
-                      drawController.caqAdmittedStudents.length -
-                      drawController.siblingAdmittedStudents.length -
-                      drawController.twinAdmittedStudents.length -
-                      drawController.lillahBoardingAdmittedStudents.length -
-                      drawController.disabilityAdmittedStudents.length;
-                  drawController.drawGeneralStudents(
-                    numberOfStudentsToBeAdmitted: numberOfStudentsToBeAdmitted,
-                    generalQuotaStudents: generalQuota,
-                  );
-
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ResultView(),
+              if (isLoading)
+                Center(child: const CircularProgressIndicator())
+              else
+                GestureDetector(
+                  onTap: () {
+                    if (!formKey.currentState!.validate()) {
+                      return;
+                    }
+                    getResult(context);
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 10.sp),
+                    decoration: BoxDecoration(
+                      color: AppColors.primary,
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                  );
-                },
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 10.sp),
-                  decoration: BoxDecoration(
-                    color: AppColors.primary,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Result',
-                      style: TextStyle(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.onPrimary,
+                    child: Center(
+                      child: Text(
+                        'Result',
+                        style: TextStyle(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.onPrimary,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  void getResult(BuildContext context) {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      controller.filterStudents();
+      final drawController = Get.isRegistered<DrawController>() ? Get.find<DrawController>() : Get.put(DrawController());
+
+      final int numberOfStudentsToBeAdmitted = int.tryParse(studentToBeAdmittedController.text) ?? 0;
+      final int percentageOfFqQuota = freedomFighterQuotaController.text.isEmpty ? 0 : int.tryParse(freedomFighterQuotaController.text) ?? 0;
+      final int percentageOfEqQuota = educationQuotaController.text.isEmpty ? 0 : int.tryParse(educationQuotaController.text) ?? 0;
+      final int percentageOfCaqQuota = catchmentAreaQuotaController.text.isEmpty ? 0 : int.tryParse(catchmentAreaQuotaController.text) ?? 0;
+      final int percentageOfSiblingQuota = siblingQuotaController.text.isEmpty ? 0 : int.tryParse(siblingQuotaController.text) ?? 0;
+      final int percentageOfTwinQuota = twinQuotaController.text.isEmpty ? 0 : int.tryParse(twinQuotaController.text) ?? 0;
+      final int percentageOfLillahBoardingQuota = lillahBoardingQuotaController.text.isEmpty ? 0 : int.tryParse(lillahBoardingQuotaController.text) ?? 0;
+      final int percentageOfDisabilityQuota = disabilityQuotaController.text.isEmpty ? 0 : int.tryParse(disabilityQuotaController.text) ?? 0;
+
+      drawController.clearAll();
+
+      drawController.drawFqEligibleStudents(
+        numberOfStudentsToBeAdmitted: numberOfStudentsToBeAdmitted,
+        percentageOfFqQuota: percentageOfFqQuota,
+      );
+
+      drawController.drawEqEligibleStudents(
+        numberOfStudentsToBeAdmitted: numberOfStudentsToBeAdmitted,
+        percentageOfEqQuota: percentageOfEqQuota,
+      );
+
+      drawController.drawCaqEligibleStudents(
+        numberOfStudentsToBeAdmitted: numberOfStudentsToBeAdmitted,
+        percentageOfCaqQuota: percentageOfCaqQuota,
+      );
+
+      drawController.drawSiblingEligibleStudents(
+        numberOfStudentsToBeAdmitted: numberOfStudentsToBeAdmitted,
+        percentageOfSiblingQuota: percentageOfSiblingQuota,
+      );
+
+      drawController.drawTwinEligibleStudents(
+        numberOfStudentsToBeAdmitted: numberOfStudentsToBeAdmitted,
+        percentageOfTwinQuota: percentageOfTwinQuota,
+      );
+
+      drawController.drawLillahBoardingEligibleStudents(
+        numberOfStudentsToBeAdmitted: numberOfStudentsToBeAdmitted,
+        percentageOfLillahBoardingQuota: percentageOfLillahBoardingQuota,
+      );
+
+      drawController.drawDisabilityEligibleStudents(
+        numberOfStudentsToBeAdmitted: numberOfStudentsToBeAdmitted,
+        percentageOfDisabilityQuota: percentageOfDisabilityQuota,
+      );
+
+      final int generalQuota = numberOfStudentsToBeAdmitted -
+          drawController.fqAdmittedStudents.length -
+          drawController.eqAdmittedStudents.length -
+          drawController.caqAdmittedStudents.length -
+          drawController.siblingAdmittedStudents.length -
+          drawController.twinAdmittedStudents.length -
+          drawController.lillahBoardingAdmittedStudents.length -
+          drawController.disabilityAdmittedStudents.length;
+      drawController.drawGeneralStudents(
+        numberOfStudentsToBeAdmitted: numberOfStudentsToBeAdmitted,
+        generalQuotaStudents: generalQuota,
+      );
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const ResultView(),
+        ),
+      );
+
+      setState(() {
+        isLoading = false;
+      });
+    } catch (e) {
+      
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 }

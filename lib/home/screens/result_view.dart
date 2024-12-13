@@ -16,7 +16,8 @@ class ResultView extends StatefulWidget {
 }
 
 class _RestulViewState extends State<ResultView> {
-  final drawcontroller = Get.put(DrawController());
+  final drawcontroller = Get.isRegistered<DrawController>() ? Get.find<DrawController>() : Get.put(DrawController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
