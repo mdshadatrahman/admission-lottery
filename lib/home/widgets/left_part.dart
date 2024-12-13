@@ -33,6 +33,9 @@ class _LeftPartState extends State<LeftPart> {
     educationQuotaController.text = '2';
     catchmentAreaQuotaController.text = '40';
     siblingQuotaController.text = '5';
+    twinQuotaController.text = '3';
+    lillahBoardingQuotaController.text = '2';
+    disabilityQuotaController.text = '1';
   }
 
   final studentToBeAdmittedController = TextEditingController();
@@ -109,6 +112,50 @@ class _LeftPartState extends State<LeftPart> {
                 ],
               ),
               SizedBox(height: 10.h),
+              Obx(
+                () => controller.selectedClass.value == 9
+                    ? Column(
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                'Major:',
+                                style: TextStyle(
+                                  fontSize: 20.sp,
+                                  color: AppColors.onTertiaryContainer,
+                                ),
+                              ),
+                              const Expanded(child: SizedBox()),
+                              Obx(
+                                () => DropdownButton(
+                                  value: controller.selectedMajor.value,
+                                  underline: const SizedBox(),
+                                  items: [
+                                    DropdownMenuItem(
+                                      value: 'Science',
+                                      child: Text('Science', style: TextStyle(fontSize: 16.sp)),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'Commerce',
+                                      child: Text('Commerce', style: TextStyle(fontSize: 16.sp)),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'Arts',
+                                      child: Text('Arts', style: TextStyle(fontSize: 16.sp)),
+                                    ),
+                                  ],
+                                  onChanged: (v) {
+                                    controller.selectedMajor.value = v as String;
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 10.h),
+                        ],
+                      )
+                    : const SizedBox(),
+              ),
               Row(
                 children: [
                   Text(
@@ -430,7 +477,6 @@ class _LeftPartState extends State<LeftPart> {
         isLoading = false;
       });
     } catch (e) {
-      
       setState(() {
         isLoading = false;
       });

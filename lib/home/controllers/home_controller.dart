@@ -13,6 +13,7 @@ class HomeController extends GetxController {
   RxString version = 'English'.obs;
   RxString shift = 'Morning'.obs;
   RxString res = 'Mandatory Resident'.obs;
+  RxString selectedMajor = 'Science'.obs;
 
   RxList<Student> students = <Student>[].obs;
   RxList<Student> showStudents = <Student>[].obs;
