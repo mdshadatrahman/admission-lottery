@@ -9,6 +9,7 @@ import 'package:admission_lottery/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:win_toast/win_toast.dart';
 
 GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -399,6 +400,27 @@ class _LeftPartState extends State<LeftPart> {
     );
   }
 
+  Future<void> showToast(String message) async {
+    final xml = """
+<?xml version="1.0" encoding="UTF-8"?>
+<toast launch="action=viewConversation&amp;conversationId=9813">
+   <visual>
+      <binding template="ToastGeneric">
+         <text></text>
+         <text>$message</text>
+      </binding>
+   </visual>
+   <actions>
+      <input id="tbReply" type="text" placeHolderContent="Type a reply" />
+      <action content="Reply" activationType="background" arguments="action=reply&amp;conversationId=9813" />
+      <action content="Like" activationType="background" arguments="action=like&amp;conversationId=9813" />
+      <action content="View" activationType="background" arguments="action=viewImage&amp;imageUrl=https://picsum.photos/364/202?image=883" />
+   </actions>
+</toast>
+  """;
+    WinToast.instance().showCustomToast(xml: xml);
+  }
+
   void getResult(BuildContext context) {
     try {
       setState(() {
@@ -472,11 +494,12 @@ class _LeftPartState extends State<LeftPart> {
           builder: (context) => const ResultView(),
         ),
       );
-
+      // showToast('Result generated successfully');
       setState(() {
         isLoading = false;
       });
     } catch (e) {
+      // showToast('An error occurred: $e');
       setState(() {
         isLoading = false;
       });
