@@ -204,10 +204,10 @@ class _LeftPartState extends State<LeftPart> {
                       value: controller.shift.value,
                       underline: const SizedBox(),
                       items: [
-                        DropdownMenuItem(
-                          value: 'Morning',
-                          child: Text('Morning', style: TextStyle(fontSize: 16.sp)),
-                        ),
+                        // DropdownMenuItem(
+                        //   value: 'Morning',
+                        //   child: Text('Morning', style: TextStyle(fontSize: 16.sp)),
+                        // ),
                         DropdownMenuItem(
                           value: 'Day',
                           child: Text('Day', style: TextStyle(fontSize: 16.sp)),
@@ -236,10 +236,10 @@ class _LeftPartState extends State<LeftPart> {
                       value: controller.res.value,
                       underline: const SizedBox(),
                       items: [
-                        DropdownMenuItem(
-                          value: 'Mandatory Resident',
-                          child: Text('Mandatory Resident', style: TextStyle(fontSize: 16.sp)),
-                        ),
+                        // DropdownMenuItem(
+                        //   value: 'Mandatory Resident',
+                        //   child: Text('Mandatory Resident', style: TextStyle(fontSize: 16.sp)),
+                        // ),
                         DropdownMenuItem(
                           value: 'Non-resident',
                           child: Text('Non-resident', style: TextStyle(fontSize: 16.sp)),
